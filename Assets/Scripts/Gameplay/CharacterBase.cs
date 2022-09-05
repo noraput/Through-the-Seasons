@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Godchild {
+namespace ThroughTheSeasons {
     public class CharacterBase : MonoBehaviour
     {
         private bool isFacingRight;
@@ -18,7 +18,7 @@ namespace Godchild {
             set => isGrounded = value;
         }
 
-        protected Collider2D collider2d;
+        protected BoxCollider2D collider2d;
 
         public Rigidbody2D rb;
 
@@ -52,7 +52,7 @@ namespace Godchild {
 
         protected virtual void Initialize() {            
             rb = transform.GetComponent<Rigidbody2D>();
-            collider2d = transform.GetComponent<Collider2D>();
+            collider2d = transform.GetComponent<BoxCollider2D>();
 
             movement = GetComponent<HorizontalMovement>();
             jumping = GetComponent<Jumping>();

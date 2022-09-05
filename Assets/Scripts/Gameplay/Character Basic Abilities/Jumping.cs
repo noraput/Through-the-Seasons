@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Godchild {
+namespace ThroughTheSeasons {
     public class Jumping : CharacterAbility
     {   
         [Header("General")]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Godchild {
+namespace ThroughTheSeasons {
     public class HorizontalMovement : CharacterAbility
     {
         [SerializeField]
@@ -41,7 +41,7 @@ namespace Godchild {
 
         protected virtual void InputMovement() {
             horizontalInput = !isStop ? Input.GetAxisRaw("Horizontal") : 0f;
-            
+
             // if (horizontalInput != 0f) {
             //     CheckForFootstep();
             // }
