@@ -51,12 +51,20 @@ namespace Godchild {
         public int jumpsLeft;
         public int jumpBufferFrames;
         
+        public int coyotyFrames;
+        private bool isCoyoty;
+        private int fallingFrames;
+        private bool isMidair;
+        private bool isFalling;
+        private bool hasFallen;
+        
         protected override void Initialize() {
             base.Initialize();
         }
 
         protected virtual void Update() {
             InputJump();
+            HandleCoyotyTime();
             HandleJumpBuffer();
         }
 
@@ -158,11 +166,41 @@ namespace Godchild {
             }
         }
 
+        protected virtual void HandleCoyotyTime() {
+            if (isJumping && character.IsGrounded) {
+                isMidair = true;
+            }
+
+            if (!character.IsGrounded & !isMidair) {
+                if (fallingFrames > coyotyFrames) {
+                    if (!hasFallen)
+                        Fall();
+
+                    return;
+                }
+
+                fallingFrames++;
+                isCoyoty = true;
+            }
+        }
+
+        protected virtual void Fall() {
+            isFalling = true;
+            isCoyoty = false;
+            jumpsLeft = hasFallen ? jumpsLeft : 1;
+            hasFallen = true;
+        }
+
         protected virtual void GroundCheck() {
             if (IsTouchingGround() && !isJumping) {
                 character.IsGrounded = true;
                 pressedJumpKey = false;
-                jumpsLeft = maxJumps;
+                isMidair = false;
+                isFalling = false;
+                hasFallen = false;
+
+                jumpsLeft = maxJumps; 
+                fallingFrames = 0;
             }
             else {
                 character.IsGrounded = false;

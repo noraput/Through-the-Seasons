@@ -391,6 +391,7 @@ MonoBehaviour:
   jumpMultiplier: 1
   jumpsLeft: 0
   jumpBufferFrames: 0
+  coyotyFrames: 20
 --- !u!114 &887960791
 MonoBehaviour:
   m_ObjectHideFlags: 0
