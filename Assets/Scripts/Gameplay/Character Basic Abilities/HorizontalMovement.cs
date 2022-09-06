@@ -7,6 +7,10 @@ namespace ThroughTheSeasons {
     public class HorizontalMovement : CharacterAbility
     {
         [SerializeField]
+        protected float speedIncreaseRate = 0.1f;
+        protected float currentSpeed;
+
+        [SerializeField]
         protected float runSpeed = 500f;
         public float RunSpeed { get; set; }
 
@@ -15,15 +19,9 @@ namespace ThroughTheSeasons {
 
         [SerializeField]
         protected float movementSmoothing = 0.05f;
-
-        [SerializeField]
-        protected int coyotyFrames = 5;
-
+        
         public float horizontalInput;
         public Vector3 velocity;
-
-        public int framesLeft;
-        public bool isCoyoty;
 
         public float speedMultiplier = 1f;
         private bool isStop = false;
@@ -32,9 +30,12 @@ namespace ThroughTheSeasons {
         private float footstepDefaultDuration = 0.25f;
         private float footstepTime;
         
-        protected virtual void Update() {
-            isCoyoty = MovementPressedWithinFrames();
+        protected override void Initialize() {
+            base.Initialize();
+            currentSpeed = runSpeed;
+        }
 
+        protected virtual void Update() {
             InputMovement();
             CheckDirection();
         }
@@ -49,10 +50,10 @@ namespace ThroughTheSeasons {
             //     footstepTime = footstepDefaultDuration;
             // }
 
-            if (anim) {
-                anim?.SetFloat("Horizontal Speed", Mathf.Abs(horizontalInput));
-                return;
-            }
+            // if (anim) {
+            //     anim?.SetFloat("Horizontal Speed", Mathf.Abs(horizontalInput));
+            //     return;
+            // }
         }
 
         // protected virtual void CheckForFootstep() {
@@ -65,23 +66,6 @@ namespace ThroughTheSeasons {
         //         footstepTime = footstepDefaultDuration;
         //     }
         // }
-
-        public virtual bool MovementPressedWithinFrames() {
-            if (horizontalInput != 0) {
-                framesLeft = coyotyFrames;
-                return true;
-            }
-            else if (framesLeft > 0) {
-                --framesLeft;
-                return true;
-            }
-            
-            return false;
-        }
-
-        public virtual bool IsInCoyotyTime() {
-            return isCoyoty;
-        }
 
         public virtual bool RightMovementPressed() {
             return horizontalInput > 0;
@@ -101,15 +85,12 @@ namespace ThroughTheSeasons {
 
             // CheckForSprint();
             
-            Vector2 targetVelocity = new Vector2(horizontalInput * runSpeed * Time.fixedDeltaTime * speedMultiplier, rb.velocity.y);
+            currentSpeed += speedIncreaseRate * Time.fixedDeltaTime;
+            Vector2 targetVelocity = new Vector2(currentSpeed, rb.velocity.y);
+
             rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
         }
 
-        // protected virtual void CheckForSprint() {
-        //     if (Input.GetKey(KeyCode.LeftShift) && character.IsGrounded) {
-        //         horizontalInput *= sprintMultiplier;
-        //     }
-        // }
 
         protected virtual void CheckDirection() {
             if (MoveOppositeToFacingDirection()) {
@@ -122,10 +103,10 @@ namespace ThroughTheSeasons {
             horizontalInput = 0f;
             rb.velocity = new Vector2 (0, rb.velocity.y);
 
-            if (anim) {
-                anim?.SetFloat("Horizontal Speed", 0f);
-                return;
-            }
+            // if (anim) {
+            //     anim?.SetFloat("Horizontal Speed", 0f);
+            //     return;
+            // }
             
             enabled = false;
         }

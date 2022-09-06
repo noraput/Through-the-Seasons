@@ -63,9 +63,14 @@ namespace ThroughTheSeasons {
         }
 
         protected virtual void Update() {
+            Test();
             InputJump();
             HandleCoyotyTime();
             HandleJumpBuffer();
+        }
+
+        protected virtual void LateUpdate() {
+            SetAnimation();
         }
 
         public virtual void Stop() {
@@ -81,6 +86,17 @@ namespace ThroughTheSeasons {
             Jump();
             GroundCheck();
             LimitFallSpeed();
+        }
+
+        protected virtual void Test() {
+            if (Input.GetKeyDown(KeyCode.M)) {
+                anim.SetTrigger("Hit");
+            }
+        }
+
+        protected virtual void SetAnimation() {
+            anim.SetFloat("Y Speed", rb.velocity.y);
+            anim.SetBool("Is Grounded", character.IsGrounded);
         }
 
         protected virtual void InputJump() {
@@ -99,6 +115,7 @@ namespace ThroughTheSeasons {
                 isJumping = true;
 
                 --jumpsLeft;
+                anim.SetTrigger("Jump");
                 
                 //PlaySound();
             }

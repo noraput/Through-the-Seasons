@@ -30,6 +30,7 @@ namespace ThroughTheSeasons {
 
         // [HideInInspector]
         // public Character main;
+        
 
         protected Animator anim;
         public Animator Anim { get => anim; }
@@ -56,7 +57,7 @@ namespace ThroughTheSeasons {
 
             movement = GetComponent<HorizontalMovement>();
             jumping = GetComponent<Jumping>();
-            // anim = transform.Find("Anim").GetComponent<Animator>();
+            anim = transform.Find("Anim").GetComponent<Animator>();
         }
 
         public virtual void Flip() {

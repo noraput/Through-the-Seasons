@@ -11,7 +11,7 @@ namespace ThroughTheSeasons {
             base.Initialize();
             character = GetComponent<CharacterBase>();
 
-            Debug.Log(this + " is Initialized");
+            // Debug.Log(this + " is Initialized");
         }
     }
 }
