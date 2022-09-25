@@ -237,8 +237,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingChunk: {fileID: 1331773217}
-  chunk: {fileID: 3762529404092044604, guid: 3eb8a3c50c41a604cae25c2856fca2fb, type: 3}
-  offset: 0
+  chunks:
+  - {fileID: 11400000, guid: 2cb72835d588b154f8f69e0f7a029c75, type: 2}
+  - {fileID: 11400000, guid: 1cd80b82bc83714458d8905e0e4aa1a2, type: 2}
+  - {fileID: 11400000, guid: 8007b48a4cb6f294696fbbca6f9f9316, type: 2}
   distanceToSpawnChunk: 200
 --- !u!4 &284968275
 Transform:
@@ -417,7 +419,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.119741, y: 1.4199991, z: -10}
+  m_LocalPosition: {x: 8.099104, y: 1.4199991, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -641,7 +643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615121687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.119741, y: 1.4199991, z: -10}
+  m_LocalPosition: {x: 8.099104, y: 1.4199991, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

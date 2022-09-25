@@ -8,21 +8,16 @@ public class ChunkManager : MonoBehaviour
     private Transform startingChunk;
 
     [SerializeField]
-    private Transform chunk;
-
-    [SerializeField]
-    private float offset;
+    private Chunk[] chunks;
 
     [SerializeField]
     private float distanceToSpawnChunk;
-
-    private Vector3 nextStartPosition;
-    private Vector3 nextEndPosition;
 
     private Vector3 lastEndPosition;
 
     private Transform playerTransform;
     private Vector3 playerStartingPosition;
+    
     private float xDistance;
     private float distanceFromLastEnd;
 
@@ -52,20 +47,18 @@ public class ChunkManager : MonoBehaviour
     }
 
     private void SpawnChunk() {
-        nextStartPosition = chunk.Find("StartPosition").position;
-        nextEndPosition = chunk.Find("EndPosition").position;
-
-        Transform spawnedChunk = SpawnChunk(lastEndPosition, nextStartPosition, nextEndPosition);
+        Chunk chunk = chunks[Random.Range(0, chunks.Length)];
+        Transform spawnedChunk = SpawnChunk(chunk, lastEndPosition);
 
         lastEndPosition = spawnedChunk.Find("EndPosition").position;
     }
 
-    private Transform SpawnChunk(Vector3 lastEnd, Vector3 nextStart, Vector3 nextEnd) {
+    private Transform SpawnChunk(Chunk chunk, Vector3 lastEnd) {
         Vector3 spawnPosition = new Vector3(
-            lastEnd.x + Mathf.Abs((nextStart.x - nextEnd.x) / 2),
-            lastEndPosition.y
+            lastEnd.x + chunk.GetXPadding() + chunk.offset.x,
+            lastEnd.y + chunk.offset.y
         );
 
-        return Instantiate(chunk, spawnPosition, Quaternion.identity);
+        return Instantiate(chunk.chunkObject, spawnPosition, Quaternion.identity);
     }   
 }
