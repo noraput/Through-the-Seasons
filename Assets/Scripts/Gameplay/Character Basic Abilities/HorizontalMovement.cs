@@ -37,7 +37,7 @@ namespace ThroughTheSeasons {
 
         protected virtual void Update() {
             InputMovement();
-            CheckDirection();
+            // CheckDirection();
         }
 
         protected virtual void InputMovement() {
