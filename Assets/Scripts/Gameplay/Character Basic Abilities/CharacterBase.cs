@@ -30,7 +30,6 @@ namespace ThroughTheSeasons {
 
         // [HideInInspector]
         // public Character main;
-        
 
         protected Animator anim;
         public Animator Anim { get => anim; }

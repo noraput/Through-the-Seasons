@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ColliderChecker : MonoBehaviour
+public class PlayerCore : PersistentObject<PlayerCore>
 {
     [SerializeField]
     Animator anim;
@@ -12,9 +12,9 @@ public class ColliderChecker : MonoBehaviour
         if (col.CompareTag("Obstacle")) {
             anim.SetTrigger("Hit");
         }
-
-        if (col.CompareTag("Deadzone")) {
-            SceneManager.LoadScene(0);  
+        else if (col.CompareTag("Deadzone")) {
+            SceneManager.LoadScene(0);
+            transform.position = GameManager.instance.playerStartingPosition;
         }
     }
 }

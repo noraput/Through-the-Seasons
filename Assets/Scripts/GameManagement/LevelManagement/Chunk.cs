@@ -6,7 +6,10 @@ using UnityEngine;
 public class Chunk : ScriptableObject
 {
     public Transform chunkObject;
-    public Vector3 offset; 
+    public Vector3 offset;
+
+    public Season season;
+    public ChunkDifficulty difficulty;
 
     public float GetXPadding()
     {

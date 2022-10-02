@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e3e8e1515340d946a2d7e62ade3370e, type: 3}
-  m_Name: Chunk-02
+  m_Name: Summer_Easy_03
   m_EditorClassIdentifier: 
-  chunkObject: {fileID: 3762529404092044604, guid: 65520a5993a33cc4aa837dde9ec29e18, type: 3}
+  chunkObject: {fileID: 3762529404092044604, guid: bc87c3a94cf4387449cd345440adee34, type: 3}
   offset: {x: 0, y: 0, z: 0}
+  season: 1
+  difficulty: 1

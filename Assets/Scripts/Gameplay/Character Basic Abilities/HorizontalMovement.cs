@@ -35,26 +35,26 @@ namespace ThroughTheSeasons {
             currentSpeed = runSpeed;
         }
 
-        protected virtual void Update() {
-            InputMovement();
-            // CheckDirection();
-        }
+        // protected virtual void Update() {
+        //     InputMovement();
+        //     CheckDirection();
+        // }
 
-        protected virtual void InputMovement() {
-            horizontalInput = !isStop ? Input.GetAxisRaw("Horizontal") : 0f;
+        // protected virtual void InputMovement() {
+        //     = !isStop ? Input.GetAxisRaw("Horizontal") : 0f;
 
-            // if (horizontalInput != 0f) {
-            //     CheckForFootstep();
-            // }
-            // else {
-            //     footstepTime = footstepDefaultDuration;
-            // }
+        //     if (horizontalInput != 0f) {
+        //         CheckForFootstep();
+        //     }
+        //     else {
+        //         footstepTime = footstepDefaultDuration;
+        //     }
 
-            // if (anim) {
-            //     anim?.SetFloat("Horizontal Speed", Mathf.Abs(horizontalInput));
-            //     return;
-            // }
-        }
+        //     if (anim) {
+        //         anim?.SetFloat("Horizontal Speed", Mathf.Abs(horizontalInput));
+        //         return;
+        //     }
+        // }
 
         // protected virtual void CheckForFootstep() {
         //     if (character.IsGrounded) {
@@ -67,13 +67,13 @@ namespace ThroughTheSeasons {
         //     }
         // }
 
-        public virtual bool RightMovementPressed() {
-            return horizontalInput > 0;
-        }
+        // public virtual bool RightMovementPressed() {
+        //     return horizontalInput > 0;
+        // }
 
-        public virtual bool LeftMovementPressed() {
-            return horizontalInput < 0;
-        }
+        // public virtual bool LeftMovementPressed() {
+        //     return horizontalInput < 0;
+        // }
 
         protected virtual void FixedUpdate() {
             Move();
@@ -88,33 +88,34 @@ namespace ThroughTheSeasons {
             currentSpeed += speedIncreaseRate * Time.fixedDeltaTime;
             Vector2 targetVelocity = new Vector2(currentSpeed, rb.velocity.y);
 
-            rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
+            //rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
+            rb.velocity = targetVelocity;
         }
 
 
-        protected virtual void CheckDirection() {
-            if (MoveOppositeToFacingDirection()) {
-                character.Flip();
-            }
-        }
+        // protected virtual void CheckDirection() {
+        //     if (MoveOppositeToFacingDirection()) {
+        //         character.Flip();
+        //     }
+        // }
 
-        public virtual void Stop() {
-            isStop = true;
-            horizontalInput = 0f;
-            rb.velocity = new Vector2 (0, rb.velocity.y);
+        // public virtual void Stop() {
+        //     isStop = true;
+        //     horizontalInput = 0f;
+        //     rb.velocity = new Vector2 (0, rb.velocity.y);
 
-            // if (anim) {
-            //     anim?.SetFloat("Horizontal Speed", 0f);
-            //     return;
-            // }
+        //     if (anim) {
+        //         anim?.SetFloat("Horizontal Speed", 0f);
+        //         return;
+        //     }
             
-            enabled = false;
-        }
+        //     enabled = false;
+        // }
 
-        public virtual void ResetStopping() {
-            isStop = false;
-            enabled = true;
-        } 
+        // public virtual void ResetStopping() {
+        //     isStop = false;
+        //     enabled = true;
+        // } 
 
         // public virtual void SetInputMultiplier(float multiplier) {
         //     speedMultiplier = multiplier * GameManager.instance.skillTreeSystem.passiveSkillManager.GetSpeedMultiplier();
@@ -124,8 +125,8 @@ namespace ThroughTheSeasons {
         //     speedMultiplier *= GameManager.instance.skillTreeSystem.passiveSkillManager.GetSpeedMultiplier();
         // }
 
-        private bool MoveOppositeToFacingDirection() {
-            return (horizontalInput > 0f && !character.IsFacingRight) || (horizontalInput < 0f && character.IsFacingRight);
-        }
+        // private bool MoveOppositeToFacingDirection() {
+        //     return (horizontalInput > 0f && !character.IsFacingRight) || (horizontalInput < 0f && character.IsFacingRight);
+        // }
     }
 }

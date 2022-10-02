@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChunkManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform startingChunk;
+    private int chunksSpawnAtTheStart;
 
     [SerializeField]
     private Chunk[] chunks;
@@ -14,36 +14,27 @@ public class ChunkManager : MonoBehaviour
     private float distanceToSpawnChunk;
 
     private Vector3 lastEndPosition;
-
-    private Transform playerTransform;
-    private Vector3 playerStartingPosition;
-    
-    private float xDistance;
     private float distanceFromLastEnd;
 
-    private void Awake() {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        playerStartingPosition = playerTransform.position;
+    private Transform startingChunk;
 
+    private void Awake() {
+        startingChunk = GameObject.FindGameObjectWithTag("StartingChunk").transform;
         lastEndPosition = startingChunk.Find("EndPosition").position;
         
-        // Just for Testing, Forget it
-        SpawnChunk();
-        SpawnChunk();
-        SpawnChunk();
-        SpawnChunk();
-        SpawnChunk();
+        for (int i = 0; i <= chunksSpawnAtTheStart; ++i) {
+            SpawnChunk();
+        }
     }
 
     private void Update() {
-        xDistance = Mathf.Abs(playerTransform.position.x - playerStartingPosition.x);
-        distanceFromLastEnd = Mathf.Abs(playerTransform.position.x - lastEndPosition.x);
-
-        Debug.Log(xDistance + " " + distanceFromLastEnd);
+        distanceFromLastEnd = Mathf.Abs(GameManager.instance.playerTransform.position.x - lastEndPosition.x);
 
         if (distanceFromLastEnd <= distanceToSpawnChunk) {
             SpawnChunk();
         }
+
+        // Debug.Log(xDistance + "  | " + distanceFromLastEnd);
     }
 
     private void SpawnChunk() {
