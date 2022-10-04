@@ -16,6 +16,8 @@ public class Chunk : ScriptableObject
         Vector3 startPosition = chunkObject.Find("StartPosition").position;
         Vector3 endPosition = chunkObject.Find("EndPosition").position;
 
-        return Mathf.Abs((startPosition.x - endPosition.x) / 2);
+        // Debug.Log("Start: " + startPosition + " | End: " + endPosition);
+
+        return Mathf.Abs((startPosition.x - endPosition.x) / 2f);
     }
 }

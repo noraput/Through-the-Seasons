@@ -45,6 +45,8 @@ public class ChunkManager : MonoBehaviour
     }
 
     private Transform SpawnChunk(Chunk chunk, Vector3 lastEnd) {
+        //Debug.Log("Last End: " + lastEnd.x + " | Padding: " + chunk.GetXPadding());
+        
         Vector3 spawnPosition = new Vector3(
             lastEnd.x + chunk.GetXPadding() + chunk.offset.x,
             lastEnd.y + chunk.offset.y

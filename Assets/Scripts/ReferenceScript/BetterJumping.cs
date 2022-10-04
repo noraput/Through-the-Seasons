@@ -12,6 +12,7 @@ public class BetterJumping : MonoBehaviour
         rb = transform.GetComponent<Rigidbody2D>();
     }
 
+    // NOTE: Use last jump key press, and delay it
     void FixedUpdate() {
         if (rb.velocity.y < 0) {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
