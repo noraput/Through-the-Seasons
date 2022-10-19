@@ -45,6 +45,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Summer
+    uniqueID: 499592719
+    locked: 0
+  - name: Spring
+    uniqueID: 645532627
+    locked: 0
+  - name: Autumn
+    uniqueID: 577174003
+    locked: 0
+  - name: Winter
+    uniqueID: 640644369
+    locked: 0
   - name: BG
     uniqueID: 892793279
     locked: 0

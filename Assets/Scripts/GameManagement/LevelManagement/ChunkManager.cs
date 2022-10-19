@@ -17,6 +17,7 @@ public class ChunkManager : MonoBehaviour
     private float distanceFromLastEnd;
 
     private Transform startingChunk;
+    public Transform StartingChunk { get => startingChunk; }
 
     private void Awake() {
         startingChunk = GameObject.FindGameObjectWithTag("StartingChunk").transform;
@@ -28,7 +29,7 @@ public class ChunkManager : MonoBehaviour
     }
 
     private void Update() {
-        distanceFromLastEnd = Mathf.Abs(GameManager.instance.playerTransform.position.x - lastEndPosition.x);
+        distanceFromLastEnd = GameManager.instance.GetDistanceFromPlayer(lastEndPosition.x);
 
         if (distanceFromLastEnd <= distanceToSpawnChunk) {
             SpawnChunk();
@@ -41,7 +42,8 @@ public class ChunkManager : MonoBehaviour
         Chunk chunk = chunks[Random.Range(0, chunks.Length)];
         Transform spawnedChunk = SpawnChunk(chunk, lastEndPosition);
 
-        lastEndPosition = spawnedChunk.Find("EndPosition").position;
+        lastEndPosition = spawnedChunk.GetComponent<SpawnedChunk>().GetEndPosition();
+        // Debug.Log(lastEndPosition + " " + spawnedChunk.GetComponent<SpawnedChunk>().GetEndPosition);
     }
 
     private Transform SpawnChunk(Chunk chunk, Vector3 lastEnd) {

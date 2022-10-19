@@ -10,7 +10,7 @@ public class Platform : MonoBehaviour {
 
     void Start() {
         col = GetComponent<Collider2D>();
-        playerTransform = GameManager.instance.playerTransform;
+        playerTransform = GameManager.instance.PlayerTransform;
     }
 
     void Update() {
