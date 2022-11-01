@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DebugCanvas : PersistentObject<DebugCanvas>
+namespace ThroughTheSeasons
 {
-    public TextMeshProUGUI debugText;
-
-    private void Update()
+    public class DebugCanvas : PersistentObject<DebugCanvas>
     {
-        debugText.text = GameManager.instance.GetDebugInfo();
+        public TextMeshProUGUI debugText;
+
+        private void Update()
+        {
+            debugText.text = GameManager.instance.GetDebugInfo();
+        }
     }
 }

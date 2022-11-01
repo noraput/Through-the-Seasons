@@ -16,7 +16,6 @@ namespace ThroughTheSeasons
         protected float defaultGravity;
 
         protected Vector2 defaultColliderSize;
-        protected bool isDodging;
 
         protected override void Initialize() {
             base.Initialize();
@@ -35,15 +34,18 @@ namespace ThroughTheSeasons
                 rb.gravityScale = defaultGravity;
 
                 collider2d.size = defaultColliderSize;
+                character.IsDodging = false;
                 return;
             }
 
             if (!character.IsGrounded) {
                 rb.gravityScale = dodgingGravity;
+                character.IsDodging = false;
                 return;
             }
 
             collider2d.size = new Vector2(collider2d.size.x, dodgingColliderHeight);
+            character.IsDodging = true;
         }
     }
 }

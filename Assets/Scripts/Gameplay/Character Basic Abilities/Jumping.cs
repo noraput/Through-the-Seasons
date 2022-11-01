@@ -19,7 +19,7 @@ namespace ThroughTheSeasons {
         protected int maxJumps = 2;
 
         [SerializeField]
-        protected int defaultJumpBufferFrames = 10;
+        protected float defaultJumpBufferTime = 0.2f;
 
         [SerializeField]
         protected float fallSpeedLimit = 30f;
@@ -49,11 +49,11 @@ namespace ThroughTheSeasons {
         public float currentHoldTime;
         public float jumpMultiplier = 1f;
         public int jumpsLeft;
-        public int jumpBufferFrames;
+        public float jumpBufferTime;
         
-        public int coyotyFrames;
-        private bool isCoyoty;
-        private int fallingFrames;
+        public float coyoteTime;
+        private bool isCoyote;
+        private float fallingTime;
         private bool isMidair;
         private bool isFalling;
         private bool hasFallen;
@@ -65,7 +65,7 @@ namespace ThroughTheSeasons {
         protected virtual void Update() {
             Test();
             InputJump();
-            HandleCoyotyTime();
+            HandleCoyoteTime();
             HandleJumpBuffer();
         }
 
@@ -104,7 +104,7 @@ namespace ThroughTheSeasons {
                 if (jumpsLeft <= 0) {
                     if (!pressedJumpKey) {
                         pressedJumpKey = true;
-                        jumpBufferFrames = defaultJumpBufferFrames;
+                        jumpBufferTime = defaultJumpBufferTime;
                     }
 
                     isJumping = false;
@@ -166,8 +166,8 @@ namespace ThroughTheSeasons {
         }
 
         protected virtual void HandleJumpBuffer() {
-            if (jumpBufferFrames > 0) {
-                jumpBufferFrames--;
+            if (jumpBufferTime > 0) {
+                jumpBufferTime -= Time.deltaTime;
             }
             else {
                 pressedJumpKey = false;
@@ -183,27 +183,27 @@ namespace ThroughTheSeasons {
             }
         }
 
-        protected virtual void HandleCoyotyTime() {
+        protected virtual void HandleCoyoteTime() {
             if (isJumping && character.IsGrounded) {
                 isMidair = true;
             }
 
             if (!character.IsGrounded & !isMidair) {
-                if (fallingFrames > coyotyFrames) {
+                if (fallingTime > coyoteTime) {
                     if (!hasFallen)
                         Fall();
 
                     return;
                 }
 
-                fallingFrames++;
-                isCoyoty = true;
+                fallingTime += Time.deltaTime;
+                isCoyote = true;
             }
         }
 
         protected virtual void Fall() {
             isFalling = true;
-            isCoyoty = false;
+            isCoyote = false;
             jumpsLeft = hasFallen ? jumpsLeft : 1;
             hasFallen = true;
         }
@@ -217,7 +217,7 @@ namespace ThroughTheSeasons {
                 hasFallen = false;
 
                 jumpsLeft = maxJumps; 
-                fallingFrames = 0;
+                fallingTime = 0f;
             }
             else {
                 character.IsGrounded = false;

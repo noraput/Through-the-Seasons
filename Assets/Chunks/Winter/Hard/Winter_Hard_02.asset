@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3e8e1515340d946a2d7e62ade3370e, type: 3}
   m_Name: Winter_Hard_02
   m_EditorClassIdentifier: 
-  chunkObject: {fileID: 3762529404092044604, guid: 8220ea5057726854c99aed25a9468f4c, type: 3}
+  chunkObject: {fileID: 3762529404092044604, guid: 4c2cfc3888a13ce46bd5857dbbad7abc, type: 3}
   offset: {x: 0, y: 0, z: 0}
   season: 4
   difficulty: 3

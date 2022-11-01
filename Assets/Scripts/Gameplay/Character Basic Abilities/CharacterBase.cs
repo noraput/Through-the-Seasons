@@ -18,6 +18,12 @@ namespace ThroughTheSeasons {
             set => isGrounded = value;
         }
 
+        private bool isDodging;
+        public bool IsDodging {
+            get => isDodging;
+            set => isDodging = value;
+        }
+
         protected BoxCollider2D collider2d;
 
         public Rigidbody2D rb;
