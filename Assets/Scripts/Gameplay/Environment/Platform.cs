@@ -18,7 +18,6 @@ namespace ThroughTheSeasons {
 
         private void Start() {
             col = GetComponent<BoxCollider2D>();
-            //playerTransform = GameManager.instance.PlayerTransform;
             playerCol = (BoxCollider2D) PlayerCore.instance.Col;
 
             bounds = (col.bounds.min.x, col.bounds.max.x, col.bounds.max.y);
@@ -43,8 +42,6 @@ namespace ThroughTheSeasons {
             if (ShouldEnableCollider()) {
                 col.enabled = true;
                 hasEnabled = true;
-
-                Debug.Log("Enabled");
             }
         }
 

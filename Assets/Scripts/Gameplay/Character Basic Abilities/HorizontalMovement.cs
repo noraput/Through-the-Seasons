@@ -85,8 +85,9 @@ namespace ThroughTheSeasons {
 
             // CheckForSprint();
             
-            currentSpeed += speedIncreaseRate * Time.fixedDeltaTime;
+            currentSpeed = runSpeed + (speedIncreaseRate * Mathf.Sqrt(Time.time));
             Vector2 targetVelocity = new Vector2(currentSpeed, rb.velocity.y);
+            //Debug.Log(currentSpeed);
 
             //rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmoothing);
             rb.velocity = targetVelocity;

@@ -2,4 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : Collectible {}
+namespace ThroughTheSeasons {
+    public class FlyingPlatform : Platform {}
+}

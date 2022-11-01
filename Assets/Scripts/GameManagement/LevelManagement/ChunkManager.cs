@@ -49,9 +49,11 @@ namespace ThroughTheSeasons
         private void SpawnChunk() {
             Chunk[] chunksPool = isTesting ? testingChunks : chunks;
             Chunk chunk = chunksPool[Random.Range(0, chunksPool.Length)];
-            Transform spawnedChunk = SpawnChunk(chunk, lastEndPosition);
-
-            lastEndPosition = spawnedChunk.GetComponent<SpawnedChunk>().GetEndPosition();
+            SpawnedChunk spawnedChunk = SpawnChunk(chunk, lastEndPosition).GetComponent<SpawnedChunk>();
+            
+            lastEndPosition = spawnedChunk.GetEndPosition();
+            spawnedChunk.InitializeItems(chunk.season);
+            
             // Debug.Log(lastEndPosition + " " + spawnedChunk.GetComponent<SpawnedChunk>().GetEndPosition);
         }
 

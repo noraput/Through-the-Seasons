@@ -15,4 +15,5 @@ MonoBehaviour:
   chunkObject: {fileID: 3762529404092044604, guid: 6b6cfeb3733b5ee4183779bc68093ab2, type: 3}
   offset: {x: 0, y: 0, z: 0}
   season: 1
-  difficulty: 0
+  difficulty: 4
+  chunkType: 0

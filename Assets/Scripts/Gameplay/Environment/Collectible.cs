@@ -6,7 +6,11 @@ public class Collectible : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D col) {
         if (col.CompareTag("Player")) {
-            Destroy(gameObject);
+            Collect();
         }
+    }
+
+    public virtual void Collect() {
+        Destroy(gameObject);
     }
 }

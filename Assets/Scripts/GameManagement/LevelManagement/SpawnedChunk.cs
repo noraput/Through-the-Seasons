@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ThroughTheSeasons
@@ -27,6 +28,17 @@ namespace ThroughTheSeasons
         private void Start() {
             startPosition = GetStartPosition();
             endPosition = GetEndPosition();
+        }
+
+        public void InitializeItems(Season season) {
+            CollectibleItem[] collectibleItems = GetComponentsInChildren<CollectibleItem>();
+            
+            if (!collectibleItems.Any())
+                return;
+            
+            foreach (CollectibleItem item in collectibleItems) {
+                item.Initialize(season);
+            }
         }
 
         public Vector3 GetStartPosition() {

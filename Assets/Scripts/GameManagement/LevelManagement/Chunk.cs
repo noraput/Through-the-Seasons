@@ -10,6 +10,7 @@ public class Chunk : ScriptableObject
 
     public Season season;
     public ChunkDifficulty difficulty;
+    public ChunkType chunkType;
 
     public float GetXPadding()
     {
