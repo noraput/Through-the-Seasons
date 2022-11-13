@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,6 +8,7 @@ namespace ThroughTheSeasons
         public Tile headTile;
         public TileInfo[] tiles;
         public TileInfo[] tailTiles;
+        public DoubleTiles[] grassTiles;
 
         public Tile GetTileAt(int order) {
             return tiles.GetTileAt(order);
@@ -19,6 +16,10 @@ namespace ThroughTheSeasons
 
         public Tile GetTailTileAt(int order) {
             return tailTiles.GetTileAt(order);
+        }
+
+        public DoubleTiles GetGrassTileAt(int order) {
+            return grassTiles[order];
         }
     }
 }
