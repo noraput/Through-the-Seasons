@@ -30,6 +30,9 @@ namespace ThroughTheSeasons
         }
 
         protected void InputDodge() {
+            if (!PlayerCore.instance.CompareState(PlayerState.Running))
+                return;
+
             if (!Input.GetKey(KeyCode.X)) {
                 rb.gravityScale = defaultGravity;
 

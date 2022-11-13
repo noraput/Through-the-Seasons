@@ -17,3 +17,4 @@ MonoBehaviour:
   season: 5
   difficulty: 0
   chunkType: 1
+  isStartingChunk: 1

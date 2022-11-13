@@ -32,7 +32,6 @@ namespace ThroughTheSeasons
 
         public void InitializeItems(Season season) {
             CollectibleItem[] collectibleItems = GetComponentsInChildren<CollectibleItem>();
-            
             if (!collectibleItems.Any())
                 return;
             

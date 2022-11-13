@@ -23,7 +23,7 @@ namespace ThroughTheSeasons
                     return GetItem(PickRandomItemFromPool(GetPoolFromSeason(season)));
                 }
                 case ItemType.BigPotion: {
-                    return new BigPotion();
+                    return new BigPotion(3f);
                 }
                 case ItemType.Magnet: {
                     return new Magnet();
@@ -32,10 +32,10 @@ namespace ThroughTheSeasons
                     return new Rocket();
                 }
                 case ItemType.HealthPotion: {
-                    return new HealthPotion();
+                    return new HealthPotion(1);
                 }
                 case ItemType.SpeedShoes: {
-                    return new SpeedShoes();
+                    return new SpeedShoes(2f);
                 }
                 case ItemType.Sycthe: {
                     return new Sycthe();
@@ -47,7 +47,7 @@ namespace ThroughTheSeasons
                     return new IceSkateShoes();
                 }
                 case ItemType.BigCoin: {
-                    return new BigCoin();
+                    return new BigCoin(100f, 10);
                 }
                 case ItemType.None: {
                     Debug.Log("There is no Item in " + season);

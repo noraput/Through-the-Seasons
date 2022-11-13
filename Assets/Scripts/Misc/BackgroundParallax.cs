@@ -14,14 +14,19 @@ public class BackgroundParallax : MonoBehaviour
     [SerializeField]
     float offset;
 
+    [SerializeField]
+    bool isVerticallyStatic;
+
     private SpriteRenderer spriteRenderer;
 
     private float width, startPosition, xPosition, distance;
+    private float defaultYPosition;
 
     private void Start() {
         startPosition = transform.position.x;
         spriteRenderer = GetComponent<SpriteRenderer>();
         width = spriteRenderer.bounds.size.x;
+        defaultYPosition = transform.position.y;
     }
     
     private void Update() {
@@ -30,7 +35,7 @@ public class BackgroundParallax : MonoBehaviour
         
         transform.position = new Vector3(
             startPosition + xPosition,
-            transform.position.y,
+            isVerticallyStatic ? transform.position.y : defaultYPosition,
             transform.position.z
         );
 

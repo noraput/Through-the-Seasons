@@ -11,15 +11,19 @@ namespace ThroughTheSeasons
         private Transform playerTransform;
         public Transform PlayerTransform { get => playerTransform; }
 
-        private CharacterBase charBase;
-        public CharacterBase CharBase { get => charBase; }
-
         private Vector2 playerStartingPosition;
         public Vector2 PlayerStartingPosition { get => playerStartingPosition; }
 
         private Vector2 lastSeasonPosition;
         private SpawnedChunk currentChunk;
 
+        private ChunkManager chunkManager;
+        public ChunkManager ChunkManager { get => chunkManager; }
+
+        public int CurrentTileOrder { get; set; }
+        public TileCreateState TileState { get; set; }
+
+        #region GameplayData
         [SerializeField]
         private float fallLimit = 20f; 
         
@@ -56,6 +60,7 @@ namespace ThroughTheSeasons
         
         private Season currentSeason;
         public Season CurrentSeason { get => currentSeason; }
+        #endregion
         
         public event Action<Season> OnSeasonChange;
 
@@ -64,12 +69,12 @@ namespace ThroughTheSeasons
 
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             playerStartingPosition = playerTransform.position;
-            charBase = playerTransform.GetComponent<CharacterBase>();
 
             Initialize();
         }
 
         private void Initialize() {
+            chunkManager = GetComponent<ChunkManager>();
             currentChunk = GameObject.FindGameObjectWithTag("StartingChunk").GetComponent<SpawnedChunk>();
             requiredChunksToNextSeason = startingRequiredChunks;
             
@@ -97,6 +102,10 @@ namespace ThroughTheSeasons
 
         private void UpdateCurrentChunk(SpawnedChunk chunk) {
             currentChunk = chunk;
+
+            if (!currentChunk.name.Contains("Flying")) {
+                PlayerCore.instance.ChangeState(PlayerState.Running);
+            }
         }
 
         private void UpdateChunkInfo(SpawnedChunk chunk) {

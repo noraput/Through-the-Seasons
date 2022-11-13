@@ -6,14 +6,60 @@ namespace ThroughTheSeasons
 {
     public abstract class Item {
         public Season season;
+
+        public abstract void Apply();
+
         public virtual void Affect() {
-            // Debug.Log(GetType().Name + " is Collected");
+            Debug.Log(GetType().Name + " is Collected");
         }
     }
 
-    public abstract class InstantItem : Item {}
-    public abstract class TemporaryItem : Item {
+    public abstract class InstantItem : Item {
+        public override void Apply() {
+            Affect();
+        }
+    }
+
+    public class TemporaryItem : Item {
+        public float lastTimeUsed;
         public float duration;
-        public abstract  void Expire();
+        public bool isExpired;
+
+        public TemporaryItem(float duration = 20f) {
+            this.duration = duration;
+        }
+
+        public override void Apply() {
+            PlayerCore.instance.CheckItem(this);
+        }
+
+        public override void Affect() {
+            if (isExpired)
+                return;
+
+            lastTimeUsed = Time.time;
+            base.Affect();
+        }
+
+        public virtual void Tick() {
+            if (isExpired)
+                return;
+            
+            Debug.Log(GetType().Name + " is ticking: " + (lastTimeUsed + duration) + " | " + Time.time);
+
+            if (lastTimeUsed + duration < Time.time) {
+                Expire();
+            }
+        }
+
+        public virtual void Reset() {
+            lastTimeUsed = Time.time;
+            Debug.Log(GetType().Name + " duration is reset, since player is already using it.");
+        }
+
+        public virtual void Expire() {
+            isExpired = true;
+            Debug.Log(GetType().Name + " is expired");
+        }
     }
 }

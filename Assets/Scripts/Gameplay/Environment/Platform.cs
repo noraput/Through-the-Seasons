@@ -18,7 +18,7 @@ namespace ThroughTheSeasons {
 
         private void Start() {
             col = GetComponent<BoxCollider2D>();
-            playerCol = (BoxCollider2D) PlayerCore.instance.Col;
+            playerCol = PlayerCore.instance.Col;
 
             bounds = (col.bounds.min.x, col.bounds.max.x, col.bounds.max.y);
             col.enabled = false;

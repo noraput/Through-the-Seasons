@@ -10,19 +10,30 @@ namespace ThroughTheSeasons {
         protected float jumpForce = 500f;
 
         [SerializeField]
-        protected float holdJumpForce = 0.01f;
+        protected float holdJumpForce = 0.01f; 
 
         [SerializeField]
         protected float defaultHoldTime = 0.2f;
+        private float flyingHoldTime = 999f;
 
         [SerializeField]
         protected int maxJumps = 2;
+        private int flyingMaxJumps = 999;
 
         [SerializeField]
         protected float defaultJumpBufferTime = 0.2f;
 
         [SerializeField]
         protected float fallSpeedLimit = 30f;
+
+        [SerializeField]
+        protected float thrustForce = 10f;
+
+        [SerializeField]
+        private float thrustMaxHoldTime = 0.5f;
+
+        [SerializeField]
+        private float thrustMaxReleaseTime = 0.5f;
         
         [SerializeField]
         protected float glideSpeedMultiplier;
@@ -57,13 +68,31 @@ namespace ThroughTheSeasons {
         private bool isMidair;
         private bool isFalling;
         private bool hasFallen;
+
+        private float thrustHoldTime;
+        private float thrustReleaseTime;
         
         protected override void Initialize() {
             base.Initialize();
         }
 
         protected virtual void Update() {
-            Test();
+            if (PlayerCore.instance.CompareState(PlayerState.Flying)) {
+                if (Input.GetKey(KeyCode.Space)) {
+                    rb.velocity = new Vector2(
+                        rb.velocity.x,
+                        thrustForce
+                    );
+                }
+                else {
+                    rb.velocity = new Vector2(
+                        rb.velocity.x,
+                        -thrustForce
+                    );
+                }
+            }
+
+            // Test();
             InputJump();
             HandleCoyoteTime();
             HandleJumpBuffer();
@@ -100,6 +129,9 @@ namespace ThroughTheSeasons {
         }
 
         protected virtual void InputJump() {
+            if (!PlayerCore.instance.CompareState(PlayerState.Running))
+                return;
+
             if (Input.GetKeyDown(KeyCode.Z)) {
                 if (jumpsLeft <= 0) {
                     if (!pressedJumpKey) {

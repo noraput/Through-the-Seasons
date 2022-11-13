@@ -12,11 +12,11 @@ namespace ThroughTheSeasons {
         }
 
         public override void Collect() {
-            holdingItem?.Affect();
+            holdingItem?.Apply();
             
-            if (itemType != ItemType.RandomInCurrentSeason) {
-                Debug.Log("This " + holdingItem.GetType().Name + " is fixed in the level");
-            }
+            // if (itemType != ItemType.RandomInCurrentSeason) {
+            //     Debug.Log("This " + holdingItem.GetType().Name + " is fixed in the level");
+            // }
 
             base.Collect();
         }

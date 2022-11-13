@@ -10,7 +10,7 @@ namespace ThroughTheSeasons
         }
 
         public override void Expire() {
-            
+            base.Expire();
         }
     }
 }
