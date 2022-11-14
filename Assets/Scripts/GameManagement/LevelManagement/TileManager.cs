@@ -51,9 +51,10 @@ namespace ThroughTheSeasons
                     continue;
                 
                 Vector3Int upperPos = lowerPos + Vector3Int.up;
+                DoubleTiles tiles = TileAssets.instance.GetRandomGrassTiles();
 
-                currentGrassOrder %= TileAssets.instance.grassTiles.Length;
-                DoubleTiles tiles = TileAssets.instance.GetGrassTileAt(currentGrassOrder);
+                // currentGrassOrder %= TileAssets.instance.grassTiles.Length;
+                // DoubleTiles tiles = TileAssets.instance.GetRandomGrassTileAt(currentGrassOrder);
                 
                 grassTilemap.SetTile(lowerPos, tiles.lower);
                 grassTilemap.SetTile(upperPos, tiles.upper);
@@ -98,7 +99,7 @@ namespace ThroughTheSeasons
                 isFirstTile = false;
             }
 
-            Debug.Log("Pos: " + pos + " | Status: " + GameManager.instance.TileState + " | HasTile: " + tilemap.HasTile(pos) + " | NextTile: " + tilemap.HasTile(pos + Vector3Int.right));
+            // Debug.Log("Pos: " + pos + " | Status: " + GameManager.instance.TileState + " | HasTile: " + tilemap.HasTile(pos) + " | NextTile: " + tilemap.HasTile(pos + Vector3Int.right));
 
             GameManager.instance.CurrentTileOrder = isHead ? 0 : GameManager.instance.CurrentTileOrder + 1;
             order = GameManager.instance.CurrentTileOrder % loopTileCount;

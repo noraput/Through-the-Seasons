@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace ThroughTheSeasons
 {
-    [Serializable]
-    public class ItemPool {
+    public class SeasonalPool<T> {
         public Season season;
-        public List<ItemType> items;  
+        public List<T> pool;
     }
+
+    [Serializable]
+    public class ItemPool : SeasonalPool<ItemType> {}
 
     public class ItemAssets : PersistentObject<ItemAssets>
     {
@@ -63,7 +65,7 @@ namespace ThroughTheSeasons
         public List<ItemType> GetPoolFromSeason(Season season, bool includesGeneralItems = true) {
             List<ItemType> itemPoolInThisSeason = itemPools.First(
                 pool => pool.season == season
-            ).items;
+            ).pool;
             
             return (includesGeneralItems
                 ? itemPoolInThisSeason.Union(GetGeneralItemPool())
@@ -72,7 +74,7 @@ namespace ThroughTheSeasons
         }
 
         public List<ItemType> GetGeneralItemPool() {
-            return itemPools.First(pool => pool.season == Season.Any).items.ToList();
+            return itemPools.First(pool => pool.season == Season.Any).pool.ToList();
         }
 
         public ItemType PickRandomItemFromPool(List<ItemType> pool) {
@@ -80,7 +82,7 @@ namespace ThroughTheSeasons
                 return ItemType.None;
             }
 
-            return pool[UnityEngine.Random.Range(0, pool.Count)];
+            return pool.PickRandom();
         }
     }
 }

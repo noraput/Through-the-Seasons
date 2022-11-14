@@ -93,7 +93,7 @@ namespace ThroughTheSeasons
         private Chunk PickChunk(Chunk[] pool) {
             return (isFlying && isFirstFlyingChunk)
                 ? pool.First(chunk => chunk.isStartingChunk)
-                : pool[Random.Range(0, pool.Length)];
+                : pool.PickRandom();
         }
 
         private Transform SpawnChunk(Chunk chunk, Vector3 lastEnd) {

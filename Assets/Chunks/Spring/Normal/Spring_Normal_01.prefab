@@ -3486,6 +3486,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStartingChunk: 0
+  treeMinDistance: 10
+  treeMaxDistance: 15
+  treeMaxYOffset: 0.075
+  treeMargin: 5
+  treeYOrigin: -4.25
+  treeRaycastDistance: 10
+  treeColliderCheckMultiplier: 1
 --- !u!1 &5209445938473673687
 GameObject:
   m_ObjectHideFlags: 0
