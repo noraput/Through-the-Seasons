@@ -24,14 +24,14 @@ namespace ThroughTheSeasons
         
         private Season season;
         
-        private float treeMinDistance = 15f;
-        private float treeMaxDistance = 20f;
+        private float treeMinDistance = 12f;
+        private float treeMaxDistance = 18f;
         private float treeMaxYOffset = 0.075f;
         private float treeMargin = 5f;
         private float treeYOrigin = -4.25f;
         private float treeRaycastDistance = 10f;
-        private float treeColliderCheckMultiplier = 1f;
-        private float treeShiftStep = 5f;
+        private float treeColliderCheckMultiplier = 10f;
+        private float treeShiftStep = 1f;
         private float currentTreeCheckXPosition;
         
         public static event Action<SpawnedChunk> OnChunkEnter;
@@ -65,22 +65,31 @@ namespace ThroughTheSeasons
             if (trees == null || !trees.Any())
                 return;
             
+            bool isShifting = false;
             float xDistance = 0f;
             float yDistance = treeYOrigin - UnityEngine.Random.Range(0f, treeMaxYOffset);
 
             currentTreeCheckXPosition = startPosition.x + treeMargin;    
             Vector2 treePosition = new Vector2(currentTreeCheckXPosition, yDistance);
 
-            Transform fristTree = Instantiate(trees.PickRandom(), treePosition, Quaternion.identity).transform;
-            fristTree.SetParent(transform);
+            Collider2D[] obstacles = Physics2D.OverlapBoxAll(
+                treePosition,
+                Vector2.one * treeColliderCheckMultiplier,
+                0f
+            );
 
-            GameObject lastTree = fristTree.gameObject;
+            GameObject lastTree = null;
             Vector2 frontTreeRaycastOrigin, backTreeRaycastOrigin = Vector2.zero;
-            bool isShifting = false;
+
+            if (CanSpawn(obstacles)) {
+                Transform fristTree = Instantiate(trees.PickRandom(), treePosition, Quaternion.identity).transform;
+                fristTree.SetParent(transform);
+                lastTree = fristTree.gameObject;
+            }
 
             while (currentTreeCheckXPosition <= endPosition.x - treeMargin) {
                 GameObject tree = trees.PickRandom();
-                while (tree.name == lastTree.name) {
+                while (lastTree && tree.name == lastTree.name) {
                     tree = trees.PickRandom();
                 }
 
@@ -89,8 +98,7 @@ namespace ThroughTheSeasons
 
                 xDistance = isShifting
                     ? treeShiftStep
-                    : UnityEngine.Random.Range(treeMinDistance, treeMaxDistance);
-                    
+                    : UnityEngine.Random.Range(treeMinDistance, treeMaxDistance);    
                 
                 yDistance = treeYOrigin - UnityEngine.Random.Range(0f, treeMaxYOffset);
                 currentTreeCheckXPosition += xDistance;
@@ -117,9 +125,9 @@ namespace ThroughTheSeasons
                 RaycastHit2D[] frontHits = Physics2D.RaycastAll(frontTreeRaycastOrigin, Vector2.down, treeRaycastDistance);
                 RaycastHit2D[] backHits = Physics2D.RaycastAll(backTreeRaycastOrigin, Vector2.down, treeRaycastDistance);
                 
-                Collider2D[] obstacles = Physics2D.OverlapBoxAll(
+                obstacles = Physics2D.OverlapBoxAll(
                     treePosition,
-                    treeRenderer.bounds.size * 5f,
+                    Vector2.one * treeColliderCheckMultiplier,
                     0f
                 );
 
@@ -129,20 +137,7 @@ namespace ThroughTheSeasons
                     continue;
                 }
 
-                if (obstacles.Any(col => col.gameObject.CompareLayer("Obstacle"))) {
-                    // Debug.Log("Obstacle");
-                    isShifting = true;
-                    continue;
-                }
-
-                if (obstacles.Any(col => col.gameObject.CompareLayer("Collectible"))) {
-                    // Debug.Log("Collectible");
-                    isShifting = true;
-                    continue;
-                }
-
-                if (obstacles.Any(col => col.CompareTag("Platform"))) {
-                    // Debug.Log("Platform");
+                if (!CanSpawn(obstacles)) {
                     isShifting = true;
                     continue;
                 }
@@ -153,6 +148,25 @@ namespace ThroughTheSeasons
 
                 //Debug.Log("Tree Spawned: " + spawnedTree.name + " | Pos: " + spawnedTree.transform.position);
             }
+        }
+
+        private bool CanSpawn(Collider2D[] obstacles) {
+            if (obstacles.Any(col => col.gameObject.CompareLayer("Obstacle"))) {
+                // Debug.Log("Obstacle");
+                return false;
+            }
+
+            if (obstacles.Any(col => col.gameObject.CompareLayer("Collectible"))) {
+                // Debug.Log("Collectible");
+                return false;
+            }
+
+            if (obstacles.Any(col => col.CompareTag("Platform"))) {
+                // Debug.Log("Platform");
+                return false;
+            }
+
+            return true;
         }
 
         public Vector3 GetStartPosition() {
