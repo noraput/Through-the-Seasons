@@ -11,6 +11,9 @@ namespace ThroughTheSeasons
         public TileInfo[] tiles;
         public TileInfo[] tailTiles;
         public DoubleTiles[] grassTiles;
+        public Tile[] waterTiles;
+        public MatchingTileInfo[] coveringWaterTiles;
+
         public TreePool[] treePools;
 
         public Tile GetTileAt(int order) {
@@ -21,8 +24,17 @@ namespace ThroughTheSeasons
             return tailTiles.GetTileAt(order);
         }
 
+        public Tile GetMatchingTile(Tile tile) {
+            // Debug.Log(tile.name);
+            return coveringWaterTiles.First(t => tile == t.matchingTile).tile;
+        }
+ 
         public DoubleTiles GetRandomGrassTiles() {
             return grassTiles.PickRandom();
+        }
+
+        public Tile GetRandomWaterTile() {
+            return waterTiles.PickRandom();
         }
 
         public DoubleTiles GetGrassTilesAt(int order) {
@@ -30,8 +42,9 @@ namespace ThroughTheSeasons
         }
 
         public List<GameObject> GetTreePoolFromSeason(Season season) {
-            Debug.Log(season);
-            return treePools.First(pool => pool.season == season).pool;
+            // Debug.Log(season);
+            TreePool trees = treePools.FirstOrDefault(pool => pool.season == season);
+            return (trees != null) ? trees.pool : null;
         }
     }
 }

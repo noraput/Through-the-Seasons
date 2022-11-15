@@ -62,7 +62,7 @@ namespace ThroughTheSeasons
         private void SpawnedRandomTrees() {
             List<GameObject> trees = TileAssets.instance.GetTreePoolFromSeason(season);
             
-            if (!trees.Any())
+            if (trees == null || !trees.Any())
                 return;
             
             float xDistance = 0f;
@@ -112,7 +112,7 @@ namespace ThroughTheSeasons
                     treePosition.y + treeRenderer.bounds.extents.y
                 );
 
-                Debug.Log(treePosition.x + treeRenderer.bounds.extents.x);
+                // Debug.Log(treePosition.x + treeRenderer.bounds.extents.x);
 
                 RaycastHit2D[] frontHits = Physics2D.RaycastAll(frontTreeRaycastOrigin, Vector2.down, treeRaycastDistance);
                 RaycastHit2D[] backHits = Physics2D.RaycastAll(backTreeRaycastOrigin, Vector2.down, treeRaycastDistance);
@@ -123,33 +123,26 @@ namespace ThroughTheSeasons
                     0f
                 );
 
-                // string debug = "Layers:";
-                // foreach (RaycastHit2D hit in frontHits) {
-                //     debug += " " + LayerMask.LayerToName(hit.collider.gameObject.layer);
-                // }
-                
-                // Debug.Log(debug);
-
                 if (!frontHits.Any() || !backHits.Any()) {
-                    Debug.Log("End of Chunk/Falling Pit");
+                    // Debug.Log("End of Chunk/Falling Pit");
                     isShifting = true;
                     continue;
                 }
 
                 if (obstacles.Any(col => col.gameObject.CompareLayer("Obstacle"))) {
-                    Debug.Log("Obstacle");
+                    // Debug.Log("Obstacle");
                     isShifting = true;
                     continue;
                 }
 
                 if (obstacles.Any(col => col.gameObject.CompareLayer("Collectible"))) {
-                    Debug.Log("Collectible");
+                    // Debug.Log("Collectible");
                     isShifting = true;
                     continue;
                 }
 
                 if (obstacles.Any(col => col.CompareTag("Platform"))) {
-                    Debug.Log("Platform");
+                    // Debug.Log("Platform");
                     isShifting = true;
                     continue;
                 }

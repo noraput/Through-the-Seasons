@@ -12,6 +12,13 @@ namespace ThroughTheSeasons
     }
 
     [Serializable]
+    public class MatchingTileInfo
+    {
+        public Tile matchingTile;
+        public Tile tile;
+    }
+
+    [Serializable]
     public class DoubleTiles
     {
         public Tile lower;

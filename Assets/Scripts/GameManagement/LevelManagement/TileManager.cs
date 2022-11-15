@@ -13,6 +13,9 @@ namespace ThroughTheSeasons
         [SerializeField]
         private Tilemap grassTilemap;
 
+        [SerializeField]
+        private Tilemap waterTilemap;
+
         private int loopTileCount = 3;
 
         private int start;
@@ -22,25 +25,31 @@ namespace ThroughTheSeasons
         private bool isFirstTile;
         private int rowStartingOrder;
 
-        private int order;
         private List<int> heads;
  
         private void Start() {
             tilemap = GetComponent<Tilemap>();
             heads = new List<int>();
-            
             isFirstTile = true;
 
-            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
-            {   
+            tilemap.CompressBounds();
+            grassTilemap.CompressBounds();
+            waterTilemap.CompressBounds();
+
+            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin) {   
                 start = pos.x < start ? pos.x : start;
                 end = pos.x > end ? pos.x : end;
                 top = pos.y > top ? pos.y : top;
             }
 
-            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
-            {   
+            Debug.Log("Start: " + start + " | End: " + end + " | Top: " + top);
+
+            foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin) {   
                 CheckingForTile(pos);
+            }
+
+            foreach (Vector3Int pos in waterTilemap.cellBounds.allPositionsWithin) {
+                CheckingForWaterTile(pos);
             }
 
             int currentGrassOrder = 0;
@@ -73,36 +82,60 @@ namespace ThroughTheSeasons
                 GameManager.instance.TileState = TileCreateState.Normal;
 
                 isHead = true;
+
+                // Debug.Log("Pos: " + pos + " | Head" + " | Order: " + GameManager.instance.CurrentTileOrder);
             }
 
             else if (!IsEndOfChunk(pos) && !tilemap.HasTile(pos + Vector3Int.right) && GameManager.instance.TileState != TileCreateState.Tail) {
-                tilemap.SetTile(pos, TileAssets.instance.GetTailTileAt(order));
+                tilemap.SetTile(pos, TileAssets.instance.GetTailTileAt(GameManager.instance.CurrentTileOrder));
                 GameManager.instance.TileState = TileCreateState.Tail;
+
+                // Debug.Log("Pos: " + pos + " | Tail" + " | Order: " + GameManager.instance.CurrentTileOrder);
             }
 
             else if (tilemap.HasTile(pos + Vector3Int.right) && GameManager.instance.TileState == TileCreateState.Tail) {
                 GameManager.instance.TileState = TileCreateState.Head;
+
+                // Debug.Log("Pos: " + pos + " | To Head" + " | Order: " + GameManager.instance.CurrentTileOrder);
             }
 
             else if (GameManager.instance.TileState == TileCreateState.Normal) {
-                if (pos.x == start) {
+                if (pos.x == start && !isFirstTile) {
                     GameManager.instance.CurrentTileOrder = rowStartingOrder;
-                    order = GameManager.instance.CurrentTileOrder % loopTileCount;
-                }
 
-                Tile tile = TileAssets.instance.GetTileAt(order);
-                tilemap.SetTile(pos, tile);
+                    tilemap.SetTile(pos, TileAssets.instance.GetTileAt(GameManager.instance.CurrentTileOrder));
+                    // Debug.Log("Pos: " + pos + " | Back to first collumn | Order: " + GameManager.instance.CurrentTileOrder);
+                }
+                else {
+                    Tile tile = TileAssets.instance.GetTileAt(GameManager.instance.CurrentTileOrder);
+                    tilemap.SetTile(pos, tile);
+
+                    // Debug.Log("Pos: " + pos + " | Normal Tile | Order: " + GameManager.instance.CurrentTileOrder);
+                }                
             }
+
+            // Debug.Log("Pos: " + pos + " | Order: " + order + " | Status: " + GameManager.instance.TileState + " | HasTile: " + tilemap.HasTile(pos) + " | NextTile: " + tilemap.HasTile(pos + Vector3Int.right));
 
             if (isFirstTile) {
                 rowStartingOrder = GameManager.instance.CurrentTileOrder;
                 isFirstTile = false;
             }
 
-            // Debug.Log("Pos: " + pos + " | Status: " + GameManager.instance.TileState + " | HasTile: " + tilemap.HasTile(pos) + " | NextTile: " + tilemap.HasTile(pos + Vector3Int.right));
+            GameManager.instance.CurrentTileOrder = isHead ? 0 : (GameManager.instance.CurrentTileOrder + 1) % loopTileCount;
+        }
 
-            GameManager.instance.CurrentTileOrder = isHead ? 0 : GameManager.instance.CurrentTileOrder + 1;
-            order = GameManager.instance.CurrentTileOrder % loopTileCount;
+        private void CheckingForWaterTile(Vector3Int pos) {
+            // Debug.Log(pos);
+
+            Vector3 waterWorldPos = waterTilemap.CellToWorld(pos);
+            Vector3Int normalTileCellPos = tilemap.WorldToCell(waterWorldPos);
+
+            if (tilemap.HasTile(normalTileCellPos)) {
+                waterTilemap.SetTile(pos, TileAssets.instance.GetMatchingTile(tilemap.GetTile<Tile>(normalTileCellPos)));
+            }
+            else {
+                waterTilemap.SetTile(pos, TileAssets.instance.GetRandomWaterTile());
+            }
         }
 
         private bool IsEndOfChunk(Vector3Int pos) {
