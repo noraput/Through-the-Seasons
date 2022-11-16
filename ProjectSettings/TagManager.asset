@@ -59,6 +59,12 @@ TagManager:
   - name: Winter
     uniqueID: 640644369
     locked: 0
+  - name: HideBG
+    uniqueID: 2007589439
+    locked: 0
+  - name: ShowBG
+    uniqueID: 1960837269
+    locked: 0
   - name: BG
     uniqueID: 892793279
     locked: 0

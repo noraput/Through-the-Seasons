@@ -23,6 +23,7 @@ namespace ThroughTheSeasons
         public bool isStartingChunk;
         
         private Season season;
+        public Season Season { get => season; }
         
         private float treeMinDistance = 12f;
         private float treeMaxDistance = 18f;
@@ -49,6 +50,7 @@ namespace ThroughTheSeasons
 
         public void InitializeItems(Season season) {
             this.season = season;
+            GetComponentInChildren<TileManager>().Initialize(season);
 
             CollectibleItem[] collectibleItems = GetComponentsInChildren<CollectibleItem>();
             if (!collectibleItems.Any())

@@ -41,9 +41,21 @@ namespace ThroughTheSeasons
         private bool isFirstFlyingChunk;
         private bool isFirstNormalChunk;
 
+        [SerializeField]
+        private int startingRequiredChunks;
+
+        [SerializeField]
+        private int requiredChunksIncreaseRate;
+        private int requiredChunksToNextSeason;
+        private int chunksSpawnedInThisSeason;
+        private int chunksSpawned;
+        private int currentSpawningSeasonIndex;
+        private Season spawningSeason = Season.Spring;
+
         private void Awake() {
             startingChunk = GameObject.FindGameObjectWithTag("StartingChunk").transform;
             lastEndPosition = startingChunk.Find("EndPosition").position;
+            requiredChunksToNextSeason = startingRequiredChunks;
             
             // for (int i = 0; i <= chunksSpawnAtTheStart; ++i) {
             //     SpawnChunk();
@@ -60,6 +72,23 @@ namespace ThroughTheSeasons
             // Debug.Log(xDistance + "  | " + distanceFromLastEnd);
         }
 
+        private void UpdateChunkInfo() {
+            chunksSpawned++;
+            chunksSpawnedInThisSeason++;
+
+            if (chunksSpawnedInThisSeason >= requiredChunksToNextSeason) {
+                chunksSpawnedInThisSeason = 0;
+                requiredChunksToNextSeason += requiredChunksIncreaseRate;
+
+                GoToNextSeason();
+            }
+        }
+
+        private void GoToNextSeason() {
+            currentSpawningSeasonIndex++;
+            spawningSeason = GameManager.instance.GetSeason(currentSpawningSeasonIndex);
+        }
+
         private void SpawnChunk() {
             Chunk[] chunksPool = PickChunkPool();
             Chunk chunk = PickChunk(chunksPool); 
@@ -68,6 +97,7 @@ namespace ThroughTheSeasons
             lastEndPosition = spawnedChunk.GetEndPosition();
             spawnedChunk.InitializeItems(chunk.season);
             
+            UpdateChunkInfo();
             // Debug.Log(lastEndPosition + " " + spawnedChunk.GetComponent<SpawnedChunk>().GetEndPosition);
         }
 
@@ -93,7 +123,7 @@ namespace ThroughTheSeasons
         private Chunk PickChunk(Chunk[] pool) {
             return (isFlying && isFirstFlyingChunk)
                 ? pool.First(chunk => chunk.isStartingChunk)
-                : pool.PickRandom();
+                : pool.Where(chunk => chunk.season == spawningSeason).ToList().PickRandom();
         }
 
         private Transform SpawnChunk(Chunk chunk, Vector3 lastEnd) {

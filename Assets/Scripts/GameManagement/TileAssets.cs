@@ -15,6 +15,7 @@ namespace ThroughTheSeasons
         public MatchingTileInfo[] coveringWaterTiles;
 
         public TreePool[] treePools;
+        public GrassColor[] grassColors;
 
         public Tile GetTileAt(int order) {
             return tiles.GetTileAt(order);
@@ -39,6 +40,12 @@ namespace ThroughTheSeasons
 
         public DoubleTiles GetGrassTilesAt(int order) {
             return grassTiles[order];
+        }
+
+        public Color GetGrassColorFromSeason(Season season) {
+            Debug.Log(season);
+            GrassColor grassColor = grassColors.FirstOrDefault(color => color.season == season);
+            return grassColor != null ? grassColor.color : Color.white;
         }
 
         public List<GameObject> GetTreePoolFromSeason(Season season) {

@@ -16,6 +16,8 @@ public class BackgroundParallax : MonoBehaviour
 
     [SerializeField]
     bool isVerticallyStatic;
+    
+    public bool needsFading = false;
 
     private SpriteRenderer spriteRenderer;
 

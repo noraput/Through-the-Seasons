@@ -16,6 +16,7 @@ namespace ThroughTheSeasons
 
         private Vector2 lastSeasonPosition;
         private SpawnedChunk currentChunk;
+        public SpawnedChunk CurrentChunk { get => currentChunk; }
 
         private ChunkManager chunkManager;
         public ChunkManager ChunkManager { get => chunkManager; }
@@ -63,6 +64,11 @@ namespace ThroughTheSeasons
         #endregion
         
         public event Action<Season> OnSeasonChange;
+
+        public int score;
+        public int life = 4;
+        public int coin;
+        
 
         protected override void Awake() {
             base.Awake();
@@ -138,6 +144,8 @@ namespace ThroughTheSeasons
         private void Update() {
             xDistance = GetDistanceFromPlayer(playerStartingPosition.x);
             distanceInThisSeason = GetDistanceFromPlayer(lastSeasonPosition.x);
+            score = (int) xDistance + coin * Coin.score;
+
         }
 
         public float GetDistanceFromPlayer(float target) {
@@ -152,9 +160,13 @@ namespace ThroughTheSeasons
             return seasons[currentSeasonIndex % seasons.Length];
         }
 
-        private Season GetSeason(int offset) {
-            return seasons[(currentSeasonIndex + offset) % seasons.Length];
+        public Season GetSeason(int seasonIndex) {
+            return seasons[seasonIndex % seasons.Length];
         }
+
+        // private Season GetSeason(int offset) {
+        //     return seasons[(currentSeasonIndex + offset) % seasons.Length];
+        // }
 
         public bool IsPlayerFallFromCurrentChunk() {
             return GetFallDistanceFromPlayer(currentChunk.transform.position.y) >= fallLimit;

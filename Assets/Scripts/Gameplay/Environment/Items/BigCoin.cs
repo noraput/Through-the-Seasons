@@ -14,6 +14,7 @@ namespace ThroughTheSeasons
         }
 
         public override void Affect() {
+            GameManager.instance.coin += 10;
             base.Affect();
         }
     }

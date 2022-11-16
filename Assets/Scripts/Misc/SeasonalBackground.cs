@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ThroughTheSeasons
@@ -11,8 +13,10 @@ namespace ThroughTheSeasons
         [SerializeField]
         private float crossfadeTime;
 
-        private SpriteRenderer[] spriteRenderers;
+        [SerializeField]
         private bool isShowing;
+
+        private List<SpriteRenderer> spriteRenderers;
 
         private void OnEnable() {
             GameManager.instance.OnSeasonChange += UpdateBackground;
@@ -24,7 +28,14 @@ namespace ThroughTheSeasons
 
         private void Start() {
             // GameManager.instance.OnSeasonChange += UpdateBackground;
-            spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+            spriteRenderers = GetComponentsInChildren<BackgroundParallax>()
+                .Where(background => background.needsFading)
+                .SelectMany(background => background.GetComponentsInChildren<SpriteRenderer>())
+                .ToList();
+
+            // string debug = "BG: ";
+            // spriteRenderers.ForEach(sr => debug += " " + sr.gameObject.name + ",");
+            // Debug.Log(debug);
 
             if (IsCurrentSeason()) {
                 Show();
@@ -47,6 +58,7 @@ namespace ThroughTheSeasons
 
         private void FadeIn() {
             isShowing = true;
+
             foreach (SpriteRenderer renderer in spriteRenderers) {
                 StartCoroutine(WaitForFadeIn(renderer));
             }
@@ -56,45 +68,56 @@ namespace ThroughTheSeasons
             isShowing = false;
             foreach (SpriteRenderer renderer in spriteRenderers) {
                 StartCoroutine(WaitForFadeOut(renderer));
+                // Hide();
             }
         } 
 
         private void Hide() {
             isShowing = false;
             foreach (SpriteRenderer renderer in spriteRenderers) {
-                renderer.color = Color.clear;
+                renderer.sortingLayerName = "HideBG";
             }
         }
 
         private void Show() {
             isShowing = true;
             foreach (SpriteRenderer renderer in spriteRenderers) {
+                renderer.sortingLayerName = "ShowBG";
                 renderer.color = Color.white;
             }
         }
 
         private IEnumerator WaitForFadeOut(SpriteRenderer renderer) {
-            float alpha = renderer.color.a;
+            renderer.sortingLayerName = "HideBG";
 
-            for (float t = 0f; t <= 1f; t += Time.deltaTime / crossfadeTime) {
-                Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, 0f, t));
-                renderer.color = newColor;
-                yield return null;
-            }
+            // renderer.sortingOrder = SortingLayer.NameToID("HideBG");
+            // renderer.sortingOrder = 0;
+
+            // for (float t = 0f; t <= 1f; t += Time.deltaTime / crossfadeTime) {
+            //     Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, 0f, t));
+            //     renderer.color = newColor;
+            //     yield return null;
+            // }
+
+            yield return new WaitForSecondsRealtime(crossfadeTime);
+            yield return null;
 
             renderer.color = Color.clear;
         }
 
         private IEnumerator WaitForFadeIn(SpriteRenderer renderer) {
-            float alpha = renderer.color.a;
+            renderer.color = Color.clear;
+            renderer.sortingLayerName = "ShowBG";
+
+            // renderer.sortingOrder = 10;
 
             for (float t = 0f; t <= 1f; t += Time.deltaTime / crossfadeTime) {
-                Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, 1f, t));
+                Color newColor = new Color(1, 1, 1, Mathf.Lerp(0f, 1f, t));
                 renderer.color = newColor;
                 yield return null;
             }
 
-            renderer.color = Color.white;
+            // renderer.color = Color.white;
         }
 
         private bool IsCurrentSeason() {

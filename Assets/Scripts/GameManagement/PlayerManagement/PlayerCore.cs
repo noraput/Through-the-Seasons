@@ -112,6 +112,12 @@ namespace ThroughTheSeasons
         private void OnTriggerEnter2D(Collider2D col) {
             if (col.CompareTag("Obstacle")) {
                 anim.SetTrigger("Hit");
+                GameManager.instance.life = (int) Mathf.Clamp(GameManager.instance.life - 1 , 0 , 4);
+
+                if (GameManager.instance.life <= 0)
+                {
+                    Debug.Log("YOU LOSE SO EZ");
+                }
             }
 
             // else if (col.CompareTag("Deadzone")) {

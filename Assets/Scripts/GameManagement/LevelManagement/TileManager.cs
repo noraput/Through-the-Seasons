@@ -42,7 +42,7 @@ namespace ThroughTheSeasons
                 top = pos.y > top ? pos.y : top;
             }
 
-            Debug.Log("Start: " + start + " | End: " + end + " | Top: " + top);
+            // Debug.Log("Start: " + start + " | End: " + end + " | Top: " + top);
 
             foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin) {   
                 CheckingForTile(pos);
@@ -136,6 +136,10 @@ namespace ThroughTheSeasons
             else {
                 waterTilemap.SetTile(pos, TileAssets.instance.GetRandomWaterTile());
             }
+        }
+
+        public void Initialize(Season season) {
+            grassTilemap.color = TileAssets.instance.GetGrassColorFromSeason(season);
         }
 
         private bool IsEndOfChunk(Vector3Int pos) {

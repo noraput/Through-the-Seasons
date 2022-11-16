@@ -26,5 +26,12 @@ namespace ThroughTheSeasons
     }
 
     [Serializable]
+    public class GrassColor
+    {
+        public Season season;
+        public Color color;
+    }
+
+    [Serializable]
     public class TreePool : SeasonalPool<GameObject> {}
 }
