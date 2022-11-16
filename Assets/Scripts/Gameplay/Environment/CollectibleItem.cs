@@ -8,7 +8,8 @@ namespace ThroughTheSeasons {
         public ItemType itemType;
 
         public void Initialize(Season season) {
-            holdingItem = ItemAssets.instance.GetItem(itemType, season);
+            //holdingItem = ItemAssets.instance.GetItem(itemType, season);
+            holdingItem = ItemAssets.instance.GetItem(ItemType.BigPotion, season);
         }
 
         public override void Collect() {

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkObject: {fileID: 3762529404092044604, guid: f53881a11e5becf49aa922ee97738311, type: 3}
   offset: {x: 0, y: 0, z: 0}
-  season: 1
+  season: 2
   difficulty: 1
   chunkType: 0
+  isStartingChunk: 0

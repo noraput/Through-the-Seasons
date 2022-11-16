@@ -25,7 +25,7 @@ namespace ThroughTheSeasons
         public float duration;
         public bool isExpired;
 
-        public TemporaryItem(float duration = 20f) {
+        public TemporaryItem(float duration = 7.5f) {
             this.duration = duration;
         }
 

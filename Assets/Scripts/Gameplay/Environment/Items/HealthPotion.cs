@@ -12,6 +12,7 @@ namespace ThroughTheSeasons
         }
 
         public override void Affect() {
+            GameManager.instance.life += 1;
             base.Affect();
         }
     }

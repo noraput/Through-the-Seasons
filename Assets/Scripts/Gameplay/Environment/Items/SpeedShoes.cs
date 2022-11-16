@@ -13,9 +13,11 @@ namespace ThroughTheSeasons
 
         public override void Affect() {
             base.Affect();
+            PlayerCore.instance.CharBase.Movement.speedMultiplier = speedMultiplier;
         }
 
         public override void Expire() {
+            PlayerCore.instance.CharBase.Movement.speedMultiplier = 1f;
             base.Expire(); 
         }
     }

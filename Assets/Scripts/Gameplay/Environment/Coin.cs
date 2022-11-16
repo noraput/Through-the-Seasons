@@ -11,7 +11,6 @@ namespace ThroughTheSeasons
         {
             GameManager.instance.coin += 1;
             base.Collect();
-
         }
     }
 }

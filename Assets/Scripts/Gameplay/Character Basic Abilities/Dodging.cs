@@ -38,17 +38,21 @@ namespace ThroughTheSeasons
 
                 collider2d.size = defaultColliderSize;
                 character.IsDodging = false;
+                anim.SetBool("Is Dashing", false);
                 return;
             }
 
             if (!character.IsGrounded) {
                 rb.gravityScale = dodgingGravity;
                 character.IsDodging = false;
+                anim.SetBool("Is Dashing", false);
                 return;
             }
 
             collider2d.size = new Vector2(collider2d.size.x, dodgingColliderHeight);
             character.IsDodging = true;
+
+            anim.SetBool("Is Dashing", true);
         }
     }
 }

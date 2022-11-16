@@ -57,7 +57,7 @@ namespace ThroughTheSeasons {
             }
 
             runTime += Time.fixedDeltaTime;
-            currentSpeed = defaultRunSpeed + (speedIncreaseRate * Mathf.Sqrt(runTime));
+            currentSpeed = (defaultRunSpeed + (speedIncreaseRate * Mathf.Sqrt(runTime))) * speedMultiplier;
             Vector2 targetVelocity = new Vector2(currentSpeed, rb.velocity.y);
             
             //Debug.Log(currentSpeed);

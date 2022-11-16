@@ -68,8 +68,8 @@ namespace ThroughTheSeasons
         public int score;
         public int life = 4;
         public int coin;
+        public int bonusScore;
         
-
         protected override void Awake() {
             base.Awake();
 
@@ -144,8 +144,8 @@ namespace ThroughTheSeasons
         private void Update() {
             xDistance = GetDistanceFromPlayer(playerStartingPosition.x);
             distanceInThisSeason = GetDistanceFromPlayer(lastSeasonPosition.x);
-            score = (int) xDistance + coin * Coin.score;
-
+            
+            score = ((int) xDistance) + (coin * Coin.score) + bonusScore;
         }
 
         public float GetDistanceFromPlayer(float target) {

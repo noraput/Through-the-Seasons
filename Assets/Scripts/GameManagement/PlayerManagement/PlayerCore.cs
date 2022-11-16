@@ -45,7 +45,7 @@ namespace ThroughTheSeasons
             expiredItems.Clear();
         } 
 
-        protected void Awake() {
+        protected override void Awake() {
             base.Awake();
 
             col = GetComponent<BoxCollider2D>();
@@ -76,6 +76,10 @@ namespace ThroughTheSeasons
 
         public bool AlreadyHasItem(TemporaryItem item) {
             return usingItems.Any(i => i.GetType() == item.GetType());
+        }
+
+        public bool HasItemOfType(ItemType itemType) {
+            return usingItems.Any(i => i.GetType() == ItemAssets.instance.GetItem(itemType).GetType());
         }
 
         public TemporaryItem GetDuplicatedItem(TemporaryItem item) {
@@ -111,12 +115,18 @@ namespace ThroughTheSeasons
 
         private void OnTriggerEnter2D(Collider2D col) {
             if (col.CompareTag("Obstacle")) {
-                anim.SetTrigger("Hit");
-                GameManager.instance.life = (int) Mathf.Clamp(GameManager.instance.life - 1 , 0 , 4);
+                if (HasItemOfType(ItemType.BigPotion) || HasItemOfType(ItemType.SpeedShoes)) {
+                    Destroy(col.gameObject);
+                    GameManager.instance.bonusScore += 1000;
+                }
+                else {
+                    anim.SetTrigger("Hit");
+                    GameManager.instance.life = (int) Mathf.Clamp(GameManager.instance.life - 1 , 0 , 4);
+                }
 
                 if (GameManager.instance.life <= 0)
                 {
-                    Debug.Log("YOU LOSE SO EZ");
+                    Debug.Log("You ran out of Life");
                 }
             }
 

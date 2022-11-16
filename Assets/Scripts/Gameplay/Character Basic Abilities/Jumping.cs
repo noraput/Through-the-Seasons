@@ -48,8 +48,7 @@ namespace ThroughTheSeasons {
         [SerializeField]
         protected Transform groundCheck;
 
-        [SerializeField]
-        protected float groundCheckRadius = 0.3f;
+        public float groundCheckRadius = 0.3f;
 
         [SerializeField]
         protected LayerMask groundLayer;
@@ -148,7 +147,6 @@ namespace ThroughTheSeasons {
 
                 --jumpsLeft;
                 anim.SetTrigger("Jump");
-                
                 //PlaySound();
             }
         }
@@ -212,6 +210,8 @@ namespace ThroughTheSeasons {
 
                 jumpsLeft = maxJumps;
                 jumpsLeft--;
+
+                anim.SetTrigger("Jump Buffer");
             }
         }
 
