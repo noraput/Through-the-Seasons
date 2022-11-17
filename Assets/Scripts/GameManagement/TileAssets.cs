@@ -43,7 +43,7 @@ namespace ThroughTheSeasons
         }
 
         public Color GetGrassColorFromSeason(Season season) {
-            Debug.Log(season);
+            // Debug.Log(season);
             GrassColor grassColor = grassColors.FirstOrDefault(color => color.season == season);
             return grassColor != null ? grassColor.color : Color.white;
         }

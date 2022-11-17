@@ -45,7 +45,7 @@ namespace ThroughTheSeasons
             if (isExpired)
                 return;
             
-            Debug.Log(GetType().Name + " is ticking: " + (lastTimeUsed + duration) + " | " + Time.time);
+            // Debug.Log(GetType().Name + " is ticking: " + (lastTimeUsed + duration) + " | " + Time.time);
 
             if (lastTimeUsed + duration < Time.time) {
                 Expire();

@@ -93,12 +93,11 @@ namespace ThroughTheSeasons {
 
             // Test();
             InputJump();
-            HandleCoyoteTime();
-            HandleJumpBuffer();
         }
 
         protected virtual void LateUpdate() {
             SetAnimation();
+            // Debug.Log(anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         }
 
         public virtual void Stop() {
@@ -114,6 +113,8 @@ namespace ThroughTheSeasons {
             Jump();
             GroundCheck();
             LimitFallSpeed();
+            HandleCoyoteTime();
+            HandleJumpBuffer();
         }
 
         protected virtual void Test() {
@@ -197,7 +198,7 @@ namespace ThroughTheSeasons {
 
         protected virtual void HandleJumpBuffer() {
             if (jumpBufferTime > 0) {
-                jumpBufferTime -= Time.deltaTime;
+                jumpBufferTime -= Time.fixedDeltaTime;
             }
             else {
                 pressedJumpKey = false;
@@ -228,7 +229,7 @@ namespace ThroughTheSeasons {
                     return;
                 }
 
-                fallingTime += Time.deltaTime;
+                fallingTime += Time.fixedDeltaTime;
                 isCoyote = true;
             }
         }
@@ -243,7 +244,7 @@ namespace ThroughTheSeasons {
         protected virtual void GroundCheck() {
             if (IsTouchingGround() && !isJumping) {
                 character.IsGrounded = true;
-                pressedJumpKey = false;
+                // pressedJumpKey = false;
                 isMidair = false;
                 isFalling = false;
                 hasFallen = false;
