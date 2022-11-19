@@ -8,6 +8,7 @@ namespace ThroughTheSeasons
         float speedMultiplier;
 
         public SpeedShoes(float speedMultiplier) {
+            itemType = ItemType.SpeedShoes;
             this.speedMultiplier = speedMultiplier;
         }
 

@@ -18,6 +18,7 @@ namespace ThroughTheSeasons
     public class ItemAssets : PersistentObject<ItemAssets>
     {
         public List<ItemPool> itemPools;
+        public List<ItemSpriteInfo> itemSprites;
 
         public Item GetItem(ItemType itemType, Season season = Season.Default) {
             switch (itemType) {
@@ -83,6 +84,10 @@ namespace ThroughTheSeasons
             }
 
             return pool.PickRandom();
+        }
+
+        public ItemSpriteInfo GetItemSprite(Item item) {
+            return itemSprites.First(i => item.itemType == i.itemType);
         }
     }
 }

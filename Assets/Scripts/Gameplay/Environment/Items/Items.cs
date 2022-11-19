@@ -6,6 +6,7 @@ namespace ThroughTheSeasons
 {
     public abstract class Item {
         public Season season;
+        public ItemType itemType;
 
         public abstract void Apply();
 
@@ -41,7 +42,7 @@ namespace ThroughTheSeasons
             base.Affect();
         }
 
-        public virtual void Tick() {
+        public virtual void TryTick() {
             if (isExpired)
                 return;
             
@@ -49,8 +50,13 @@ namespace ThroughTheSeasons
 
             if (lastTimeUsed + duration < Time.time) {
                 Expire();
+                return;
             }
+
+            Tick();
         }
+
+        public virtual void Tick() {}
 
         public virtual void Reset() {
             lastTimeUsed = Time.time;

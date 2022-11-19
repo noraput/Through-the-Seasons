@@ -909,13 +909,59 @@ MonoBehaviour:
   - season: 5
     pool: 0100000002000000030000000500000009000000
   - season: 2
-    pool: 
+    pool: 07000000
   - season: 1
     pool: 04000000
   - season: 3
     pool: 06000000
   - season: 4
     pool: 08000000
+  itemSprites:
+  - itemType: 1
+    sprite: {fileID: 21300000, guid: 87a31938ecf99ee4c8c1e5957dfa9c6e, type: 3}
+    offset: {x: 0.03, y: 0.05, z: 0}
+    scale: {x: 0.55, y: 0.55, z: 0.55}
+    rotation: {x: 0, y: 0, z: 0}
+  - itemType: 2
+    sprite: {fileID: 21300000, guid: 09bfb222b89cdf74aadc7107dea06ca6, type: 3}
+    offset: {x: 0.03, y: 0.02, z: 0}
+    scale: {x: 0.35, y: 0.35, z: 0.35}
+    rotation: {x: 0, y: 0, z: -30}
+  - itemType: 3
+    sprite: {fileID: 21300000, guid: bbbeab5c6a459db4383162600bf7dbf1, type: 3}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 0.5}
+    rotation: {x: 0, y: 0, z: -15}
+  - itemType: 4
+    sprite: {fileID: 21300000, guid: 389f2a78172d6af499ebc474122d50a0, type: 3}
+    offset: {x: 0.02, y: 0.05, z: 0}
+    scale: {x: 0.55, y: 0.55, z: 0.55}
+    rotation: {x: 0, y: 0, z: 0}
+  - itemType: 5
+    sprite: {fileID: 21300000, guid: ca666b87f0e027346b367433c0a23456, type: 3}
+    offset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.55, y: 0.55, z: 0.55}
+    rotation: {x: 0, y: 0, z: 0}
+  - itemType: 6
+    sprite: {fileID: 21300000, guid: f8c91c3d581f1b3409f4ad67c1801759, type: 3}
+    offset: {x: 0.035, y: 0, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 0.5}
+    rotation: {x: 0, y: 0, z: 0}
+  - itemType: 7
+    sprite: {fileID: 21300000, guid: f8c91c3d581f1b3409f4ad67c1801759, type: 3}
+    offset: {x: 0.035, y: 0, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 0.5}
+    rotation: {x: 0, y: 0, z: 0}
+  - itemType: 8
+    sprite: {fileID: 21300000, guid: f8c91c3d581f1b3409f4ad67c1801759, type: 3}
+    offset: {x: 0.035, y: 0, z: 0}
+    scale: {x: 0.5, y: 0.5, z: 0.5}
+    rotation: {x: 0, y: 0, z: 0}
+  - itemType: 9
+    sprite: {fileID: 21300000, guid: b4a871383c4ce0e41a1f05eb8df12608, type: 3}
+    offset: {x: 0, y: 0.035, z: 0}
+    scale: {x: 0.75, y: 0.75, z: 0.75}
+    rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &284968278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1709,7 +1755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.810696, y: -0.6899986, z: -10}
+  m_LocalPosition: {x: 15.812217, y: -0.6899986, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2105,7 +2151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615121687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.810696, y: -0.6899986, z: -10}
+  m_LocalPosition: {x: 15.812217, y: -0.6899986, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17753,7 +17799,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7141047143051115345, guid: 2c19c0c099e047f4d80148e316d35f29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 7141047143985186161, guid: 2c19c0c099e047f4d80148e316d35f29, type: 3}
       propertyPath: m_Enabled

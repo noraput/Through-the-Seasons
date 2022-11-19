@@ -33,5 +33,16 @@ namespace ThroughTheSeasons
     }
 
     [Serializable]
+    public class ItemSpriteInfo
+    {
+        public ItemType itemType;
+        public Sprite sprite;
+        public Vector3 offset;
+        public Vector3 scale;
+        public Vector3 rotation;
+    }
+    
+
+    [Serializable]
     public class TreePool : SeasonalPool<GameObject> {}
 }

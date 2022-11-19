@@ -5,6 +5,10 @@ using UnityEngine;
 namespace ThroughTheSeasons
 {
     public class Sycthe : TemporaryItem {
+        public Sycthe() {
+            itemType = ItemType.Sycthe;
+        }
+
         public override void Affect() {
             base.Affect();
         }

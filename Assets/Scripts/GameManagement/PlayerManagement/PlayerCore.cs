@@ -97,7 +97,7 @@ namespace ThroughTheSeasons
 
             if (usingItems.Count > 0) {
                 foreach (TemporaryItem item in usingItems) {
-                    item.Tick();
+                    item.TryTick();
 
                     if (item.isExpired) {
                         expiredItems.Add(item);
@@ -116,17 +116,19 @@ namespace ThroughTheSeasons
         private void OnTriggerEnter2D(Collider2D col) {
             if (col.CompareTag("Obstacle")) {
                 if (HasItemOfType(ItemType.BigPotion) || HasItemOfType(ItemType.SpeedShoes)) {
-                    Destroy(col.gameObject);
-                    GameManager.instance.bonusScore += 1000;
+                    if (col.gameObject && col.gameObject) {
+                        Destroy(col.gameObject);
+                        GameManager.instance.bonusScore += 1000;
+                    }
                 }
                 else {
                     anim.SetTrigger("Hit");
-                    GameManager.instance.life = (int) Mathf.Clamp(GameManager.instance.life - 1 , 0 , 4);
+                    GameManager.instance.UpdateLife(-1);
                 }
 
                 if (GameManager.instance.life <= 0)
                 {
-                    Debug.Log("You ran out of Life");
+                    // Debug.Log("You ran out of Life");
                 }
             }
 

@@ -9,6 +9,8 @@ namespace ThroughTheSeasons
         public int coinGained;
 
         public BigCoin(float score, int coinGained) {
+            itemType = ItemType.BigCoin;
+            
             this.score = score;
             this.coinGained = coinGained;
         }

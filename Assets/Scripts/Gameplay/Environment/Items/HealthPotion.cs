@@ -8,11 +8,12 @@ namespace ThroughTheSeasons
         public int healthGain;
 
         public HealthPotion(int healthGain) {
+            itemType = ItemType.HealthPotion;
             this.healthGain = healthGain;
         }
 
         public override void Affect() {
-            GameManager.instance.life += 1;
+            GameManager.instance.UpdateLife(healthGain);
             base.Affect();
         }
     }

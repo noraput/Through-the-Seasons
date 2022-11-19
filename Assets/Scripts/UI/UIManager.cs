@@ -15,25 +15,25 @@ namespace ThroughTheSeasons
         public Sprite[] lifeSprites;
         public Image lifeImage;
 
-        
-        // Start is called before the first frame update
-        void Start()
-        {
-            
+        private void OnEnable() {
+            GameManager.instance.OnLifeChanged += UpdateLifeUi;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
+        private void OnDisable() {
+            GameManager.instance.OnLifeChanged -= UpdateLifeUi;
+        }
+ 
+        void Update() {
             scoreText.text = "Score : " + GameManager.instance.score;
             shadowScoreText.text = "Score : " + GameManager.instance.score;
-            
-            if (GameManager.instance.life > 0)
-            {
-                lifeImage.sprite = lifeSprites[GameManager.instance.life -1];
+        }
+
+        private void UpdateLifeUi(int life) {
+            if (life > 0) {
+                lifeImage.enabled = true;
+                lifeImage.sprite = lifeSprites[life -1];
             }
-            else
-            {
+            else {
                 lifeImage.enabled = false;
             }
         }

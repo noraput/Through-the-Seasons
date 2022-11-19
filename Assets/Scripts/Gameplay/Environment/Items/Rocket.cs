@@ -5,6 +5,10 @@ using UnityEngine;
 namespace ThroughTheSeasons
 {
     public class Rocket : TemporaryItem {
+        public Rocket() {
+            itemType = ItemType.Rocket;
+        }
+        
         public override void Affect() {
             base.Affect();
 

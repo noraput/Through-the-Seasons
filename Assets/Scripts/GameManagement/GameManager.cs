@@ -64,6 +64,7 @@ namespace ThroughTheSeasons
         #endregion
         
         public event Action<Season> OnSeasonChange;
+        public event Action<int> OnLifeChanged;
 
         public int score;
         public int life = 4;
@@ -86,8 +87,9 @@ namespace ThroughTheSeasons
             
             currentSeasonIndex = startingSeasonIndex;
             currentSeason = GetCurrentSeason();
-
             lastSeasonPosition = Vector2.zero;
+            
+            OnLifeChanged?.Invoke(life);
         }
 
         private void OnEnable() {
@@ -162,6 +164,11 @@ namespace ThroughTheSeasons
 
         public Season GetSeason(int seasonIndex) {
             return seasons[seasonIndex % seasons.Length];
+        }
+
+        public void UpdateLife(int life) {
+            this.life = Mathf.Clamp(this.life + life, 0, 4);
+            OnLifeChanged?.Invoke(life);
         }
 
         // private Season GetSeason(int offset) {

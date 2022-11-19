@@ -5,18 +5,18 @@ using UnityEngine;
 namespace ThroughTheSeasons {
     public class Platform : MonoBehaviour {
         [SerializeField]
-        private float offset;
-        private float dodgeOffset = 0.25f;
-        private BoxCollider2D col;
+        protected float offset;
+        protected float dodgeOffset = 0.25f;
+        protected BoxCollider2D col;
 
-        private Transform playerTransform;
-        private CharacterBase charBase;
-        private BoxCollider2D playerCol;
+        protected Transform playerTransform;
+        protected CharacterBase charBase;
+        protected BoxCollider2D playerCol;
 
-        private (float xMin, float xMax, float yMax) bounds;
-        private bool hasEnabled, hasDisabled;
+        protected (float xMin, float xMax, float yMax) bounds;
+        protected bool hasEnabled, hasDisabled;
 
-        private void Start() {
+        protected virtual void Start() {
             col = GetComponent<BoxCollider2D>();
             playerCol = PlayerCore.instance.Col;
 
@@ -24,7 +24,7 @@ namespace ThroughTheSeasons {
             col.enabled = false;
         }
 
-        private void Update() {
+        protected virtual void Update() {
             if (!HasPlayerReachedPlatform())
                 return;
 
@@ -45,15 +45,15 @@ namespace ThroughTheSeasons {
             }
         }
 
-        private bool ShouldEnableCollider() {
+        protected bool ShouldEnableCollider() {
             return playerCol.bounds.min.y > bounds.yMax;
         }
 
-        private bool HasPlayerReachedPlatform() {
+        protected bool HasPlayerReachedPlatform() {
             return playerCol.bounds.max.x >= bounds.xMin;
         }
 
-        private bool HasPlayerExitPlatform() {
+        protected bool HasPlayerExitPlatform() {
             return playerCol.bounds.min.x >= bounds.xMax;
         }
     }
