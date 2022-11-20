@@ -23,5 +23,13 @@ namespace ThroughTheSeasons
         public static bool CompareLayer(this GameObject go, string layerName) {
             return LayerMask.LayerToName(go.layer) == layerName; 
         }
+
+        public static void Stop(this Rigidbody2D rb) {
+            rb.velocity = Vector2.zero;
+        }
+
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> keyPairValue) {
+            return keyPairValue.ToDictionary(kpv => kpv.Key, kpv => kpv.Value);
+        } 
     }
 }

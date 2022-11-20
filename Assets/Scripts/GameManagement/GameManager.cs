@@ -168,7 +168,7 @@ namespace ThroughTheSeasons
 
         public void UpdateLife(int life) {
             this.life = Mathf.Clamp(this.life + life, 0, 4);
-            OnLifeChanged?.Invoke(life);
+            OnLifeChanged?.Invoke(this.life);
         }
 
         // private Season GetSeason(int offset) {

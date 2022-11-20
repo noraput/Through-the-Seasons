@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +21,9 @@ namespace ThroughTheSeasons
         public PlayerState state;
         private CinemachineFramingTransposer composer;
 
+        public Action OnDeath;
+        private bool isDead;
+
         [SerializeField]
         Animator anim;
 
@@ -29,10 +32,12 @@ namespace ThroughTheSeasons
 
          private void OnEnable() {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            OnDeath += Die;
         }
 
         private void OnDisable() {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            OnDeath -= Die;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -43,6 +48,8 @@ namespace ThroughTheSeasons
             charBase.Movement.Reset();
             usingItems.Clear();
             expiredItems.Clear();
+            
+            isDead = false;
         } 
 
         protected override void Awake() {
@@ -107,9 +114,13 @@ namespace ThroughTheSeasons
         }
 
         private void CheckIfPlayerIsFalling() {
+            if (isDead)
+                return;
+
             if (GameManager.instance.IsPlayerFallFromCurrentChunk() && CompareState(PlayerState.Running)) {
-                SceneManager.LoadScene(0);
-                transform.position = GameManager.instance.PlayerStartingPosition;
+                // SceneManager.LoadScene(0);
+                // transform.position = GameManager.instance.PlayerStartingPosition;
+                OnDeath?.Invoke();
             }
         }
 
@@ -128,7 +139,7 @@ namespace ThroughTheSeasons
 
                 if (GameManager.instance.life <= 0)
                 {
-                    // Debug.Log("You ran out of Life");
+                    OnDeath?.Invoke();
                 }
             }
 
@@ -136,6 +147,12 @@ namespace ThroughTheSeasons
             //     SceneManager.LoadScene(0);
             //     transform.position = GameManager.instance.playerStartingPosition;
             // }
+        }
+
+        private void Die() {
+            isDead = true;
+            charBase.Disable();
+            Debug.Log("You ran out of Life");
         }
 
         public void ChangeState(PlayerState state) {

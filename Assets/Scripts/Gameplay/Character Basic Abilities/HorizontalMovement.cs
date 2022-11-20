@@ -24,6 +24,8 @@ namespace ThroughTheSeasons {
         [SerializeField]
         float PrepareFlyingStopHeight;
 
+        private bool isStop;
+
         // [SerializeField]
         // private float footstepDefaultDuration = 0.25f;
         // private float footstepTime;
@@ -32,6 +34,13 @@ namespace ThroughTheSeasons {
             runTime = 0f;
             currentSpeed = defaultRunSpeed;
             defaultGravity = rb.gravityScale;
+            isStop = false;
+        }
+
+        public virtual void Stop() {
+            isStop = true;
+            rb.gravityScale = 0f;
+            rb.Stop();
         }
         
         protected override void Initialize() {

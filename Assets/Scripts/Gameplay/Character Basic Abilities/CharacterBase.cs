@@ -34,6 +34,9 @@ namespace ThroughTheSeasons {
         protected Jumping jumping;
         public Jumping Jumping { get => jumping; }
 
+        protected Dodging dodging;
+        public Dodging Dodging { get => dodging; }
+
         // [HideInInspector]
         // public Character main;
 
@@ -62,7 +65,28 @@ namespace ThroughTheSeasons {
 
             movement = GetComponent<HorizontalMovement>();
             jumping = GetComponent<Jumping>();
+            dodging = GetComponent<Dodging>();
+
             anim = transform.Find("Anim").GetComponent<Animator>();
+            Eneble();
+        }
+
+        public virtual void Disable() {
+            movement.Stop();
+
+            movement.enabled = false;
+            jumping.enabled = false;
+            dodging.enabled = false;
+            anim.enabled = false;
+        }
+
+        public virtual void Eneble() {
+            movement.Reset();
+
+            movement.enabled = true;
+            jumping.enabled = true;
+            dodging.enabled = true;
+            anim.enabled = true;
         }
 
         public virtual void Flip() {
