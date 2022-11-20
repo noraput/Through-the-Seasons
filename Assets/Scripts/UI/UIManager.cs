@@ -49,14 +49,17 @@ namespace ThroughTheSeasons
         }
 
         private void ShowResultScreen() {
-            resultScreen.SetActive(true);
+            resultScreen.GetComponent<Animator>().SetTrigger("Open");
             resultScreenWordsText.text = resultScreenWords.PickRandom();
+            
             StartCoroutine(WaitForFadeIn());
         }
 
         private IEnumerator WaitForFadeIn() {
             yield return new WaitForSecondsRealtime(fadeinWaitTime);
             resultTextGameObject.SetActive(true);
+            resultTextGameObject.GetComponent<Animator>().SetTrigger("Open");
+
             resultText.text = $"Coins Collected: "
                 + $"\nSeasons Passed: "
                 + $"\nYears Passed: "

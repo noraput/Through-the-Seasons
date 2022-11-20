@@ -17,11 +17,6 @@ public class UIAchievement : MonoBehaviour
     /// <summary>
     /// Destroy object after a certain amount of time
     /// </summary>
-    private void Start() {
-        Title = transform.Find("Title").GetComponent<TextMeshProUGUI>();
-        Description = transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        Percent = transform.Find("ProgressText").GetComponent<TextMeshProUGUI>();
-    }
 
     public void StartDeathTimer ()
     {
@@ -82,7 +77,7 @@ public class UIAchievement : MonoBehaviour
     {
         yield return new WaitForSeconds(AchievementManager.instance.DisplayTime);
         GetComponent<Animator>().SetTrigger("ScaleDown");
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         AS.CheckBackLog();
         Destroy(gameObject);
     }

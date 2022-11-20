@@ -14,8 +14,8 @@ namespace ThroughTheSeasons {
             transform.localScale *= itemScale;
             itemSpriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
 
-            // holdingItem = ItemAssets.instance.GetItem(itemType, season);
-            holdingItem = ItemAssets.instance.GetItem(ItemType.HealthPotion, season);
+            holdingItem = ItemAssets.instance.GetItem(itemType, season);
+            // holdingItem = ItemAssets.instance.GetItem(ItemType.HealthPotion, season);
             SetItemSprite();
         }
 

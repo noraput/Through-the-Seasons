@@ -16,6 +16,7 @@ namespace ThroughTheSeasons
         protected float defaultGravity;
 
         protected Vector2 defaultColliderSize;
+        protected bool hasSlid;
 
         protected override void Initialize() {
             base.Initialize();
@@ -38,6 +39,7 @@ namespace ThroughTheSeasons
 
                 collider2d.size = defaultColliderSize;
                 character.IsDodging = false;
+                hasSlid = false;
                 anim.SetBool("Is Dashing", false);
                 return;
             }
@@ -45,6 +47,7 @@ namespace ThroughTheSeasons
             if (!character.IsGrounded) {
                 rb.gravityScale = dodgingGravity;
                 character.IsDodging = false;
+                hasSlid = false;
                 anim.SetBool("Is Dashing", false);
                 return;
             }
@@ -53,6 +56,12 @@ namespace ThroughTheSeasons
             character.IsDodging = true;
 
             anim.SetBool("Is Dashing", true);
+
+            if (!hasSlid) {
+                GameStats.instance.AddAchievementProgress("SlidesPerformed");
+            }
+
+            hasSlid = true;
         }
     }
 }

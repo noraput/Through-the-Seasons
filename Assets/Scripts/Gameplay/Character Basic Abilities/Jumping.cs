@@ -143,6 +143,10 @@ namespace ThroughTheSeasons {
                     return;
                 }
 
+                if (jumpsLeft >= maxJumps) {
+                    GameStats.instance.AddAchievementProgress("DoubleJumpsPerformed");
+                }
+
                 currentHoldTime = 0;
                 isJumping = true;
 

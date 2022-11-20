@@ -44,8 +44,12 @@ namespace ThroughTheSeasons
 
         [SerializeField]
         private int seasonsPerYear;
+
         private int seasonsPassed;
+        public int SeasonsPassed { get => seasonsPassed; }
+
         private int yearPassed;
+        public int YearPassed { get => yearPassed; }
 
         [SerializeField]
         private Season[] seasons = new Season[] {
@@ -67,9 +71,16 @@ namespace ThroughTheSeasons
         public event Action<int> OnLifeChanged;
 
         public int score;
+        public int Score { get => score; }
+
         public int life = 4;
-        public int coin;
+        public int Life { get => life; }
+
+        public int coins;
+        public int Coins { get => coins; }
+
         public int bonusScore;
+        public int BonusScore { get => bonusScore; }
         
         protected override void Awake() {
             base.Awake();
@@ -96,12 +107,14 @@ namespace ThroughTheSeasons
             SpawnedChunk.OnChunkEnter += UpdateCurrentChunk;
             SpawnedChunk.OnChunkExit += UpdateChunkInfo;
             SceneManager.sceneLoaded += OnSceneLoaded;
+            Coin.OnCollect += UpdateCoin;
         }
 
         private void OnDisable() {
             SpawnedChunk.OnChunkExit -= UpdateCurrentChunk;
             SpawnedChunk.OnChunkExit -= UpdateChunkInfo;
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            Coin.OnCollect -= UpdateCoin;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -147,7 +160,7 @@ namespace ThroughTheSeasons
             xDistance = GetDistanceFromPlayer(playerStartingPosition.x);
             distanceInThisSeason = GetDistanceFromPlayer(lastSeasonPosition.x);
             
-            score = ((int) xDistance) + (coin * Coin.score) + bonusScore;
+            score = ((int) xDistance) + (coins * Coin.score) + bonusScore;
         }
 
         public float GetDistanceFromPlayer(float target) {
@@ -169,6 +182,14 @@ namespace ThroughTheSeasons
         public void UpdateLife(int life) {
             this.life = Mathf.Clamp(this.life + life, 0, 4);
             OnLifeChanged?.Invoke(this.life);
+        }
+        
+        public void UpdateCoin(int coins) {
+            this.coins += coins;
+        }
+
+        public void UpdateBonusScore(int score) {
+            bonusScore += score;
         }
 
         // private Season GetSeason(int offset) {

@@ -129,12 +129,15 @@ namespace ThroughTheSeasons
                 if (HasItemOfType(ItemType.BigPotion) || HasItemOfType(ItemType.SpeedShoes)) {
                     if (col.gameObject && col.gameObject) {
                         Destroy(col.gameObject);
-                        GameManager.instance.bonusScore += 1000;
+                        
+                        GameManager.instance.UpdateBonusScore(1000);
+                        GameStats.instance.AddAchievementProgress("ObstacleDestroyed");
                     }
                 }
                 else {
                     anim.SetTrigger("Hit");
                     GameManager.instance.UpdateLife(-1);
+                    GameStats.instance.AddAchievementProgress("ObstacleHits");
                 }
 
                 if (GameManager.instance.life <= 0)
